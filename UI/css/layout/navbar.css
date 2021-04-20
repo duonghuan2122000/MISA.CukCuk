@@ -1,0 +1,36 @@
+.navbar {
+    height: calc(100vh - 56px);
+    width: 226px;
+    border-right: 1px solid #e5e5e5;
+}
+
+.navbar .navbar-item {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.navbar .navbar-item-icon {
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+.navbar .navbar-item-icon * {
+    font-size: 16px;
+}
+
+/* Navbar item active */
+.navbar .navbar-item.active {
+    background-color: green;
+}
+
+.navbar .navbar-item.active .navbar-item-icon *,
+.navbar .navbar-item.active .navbar-item-text {
+    color: #fff;
+}
+
+/* Navbar item focus */
+.navbar .navbar-item:not(.active):hover {
+    background-color: #ccc;
+}

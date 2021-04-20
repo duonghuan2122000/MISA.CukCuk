@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- Nhúng file css -->
+    <link rel="stylesheet" href="../assets/fontawesome5/css/fontawesome.min.css">
+    <link rel="stylesheet" href="../assets/fontawesome5/css/solid.min.css">
+
+    <link rel="stylesheet" href="../css/common.css">
+
+    <link rel="stylesheet" href="../css/components/dropdown.css">
+    <link rel="stylesheet" href="../css/components/button.css">
+    <link rel="stylesheet" href="../css/components/input.css">
+    <link rel="stylesheet" href="../css/components/table.css">
+    <link rel="stylesheet" href="../css/components/pagination.css">
+
+    <link rel="stylesheet" href="../css/layout/header.css">
+    <link rel="stylesheet" href="../css/layout/navbar.css">
+    <link rel="stylesheet" href="../css/layout/content.css">
+    <!-- Nhúng file css -->
+</head>
+
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="logo-box">
+            <div class="toggle fas fa-bars"></div>
+            <div class="logo">Misa CukCuk</div>
+        </div>
+
+        <div class="header-toolbar-box">
+            <div class="header-toolbar-left dropdown">
+                <div class="dropdown-toggle">
+                    <div style="margin-left: 16px;">Nhà hàng biển đông</div>
+                    <div class="fas fa-chevron-down" style="margin-left: 8px"></div>
+                </div>
+
+                <div class="dropdown-content">
+                    <div class="dropdown-item">Nhà hàng biển đông 1</div>
+                    <div class="dropdown-item">Nhà hàng biển đông chi nhánh Hà Nội</div>
+                </div>
+            </div>
+            <div class="header-toolbar-right">
+                <div class="fas fa-bell" style="margin-right: 8px;"></div>
+                <div>Dương Bằng Huân</div>
+                <div class="dropdown" style="margin-left: 8px;">
+                    <div class="dropdown-toggle">
+                        <i class="fas fa-ellipsis-h"></i>
+                    </div>
+                    <div class="dropdown-content right">
+                        <div class="dropdown-item">Thông tin cá nhân</div>
+                        <div class="dropdown-item">Đăng xuất</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header -->
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="navbar-content">
+            <div class="navbar-item">
+                <div class="navbar-item-icon">
+                    <i class="fas fa-chart-pie"></i>
+                </div>
+                <div class="navbar-item-text">
+                    Tổng quan
+                </div>
+            </div>
+            <div class="navbar-item">
+                <div class="navbar-item-icon">
+                    <i class="fas fa-chart-bar"></i>
+                </div>
+                <div class="navbar-item-text">
+                    Báo cáo
+                </div>
+            </div>
+            <div class="navbar-item active">
+                <div class="navbar-item-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="navbar-item-text">
+                    Danh sách khách hàng
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Navbar -->
+
+    <!-- Content -->
+    <div class="content">
+        <div class="title-box">
+            <div class="title">DANH SÁCH KHÁCH HÀNG</div>
+            <button class="button is-primary">
+                <span class="icon fas fa-user-plus"></span>
+                <span>Thêm khách hàng</span>
+            </button>
+        </div>
+
+        <div class="toolbar-box" style="margin-top: 16px;">
+            <div class="toolbar-left">
+                <input style="width: 300px;" type="text" class="input"
+                    placeholder="Tìm kiếm nhân viên theo Mã, họ tên hoặc SĐT">
+                <select class="input">
+                    <option value="">Phòng ban</option>
+                </select>
+                <select class="input">
+                    <option value="">Vị trí</option>
+                </select>
+            </div>
+            <div class="toolbar-right">
+                <button class="button">
+                    <span class="fas fa-sync"></span>
+                </button>
+                <button class="button">
+                    <span class="fas fa-trash"></span>
+                </button>
+            </div>
+        </div>
+
+        <div class="scroll">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Mã khách hàng</th>
+                        <th>Họ và tên</th>
+                        <th>Email</th>
+                        <th>Số điện thoại</th>
+                        <th>Ngày sinh</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                    <tr>
+                        <td>KH001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>nva@gmail.com</td>
+                        <td>123456789</td>
+                        <td>15/04/2021</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="footer">
+            <div>
+                Hiển thị 1 - 10/1000 khách hàng
+            </div>
+            <div class="pagination">
+                <div class="pagination-item prev-page">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+                <div class="pagination-item active">1</div>
+                <div class="pagination-item">2</div>
+                <div class="pagination-item">3</div>
+                <div class="pagination-item next-page">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+            <div>
+                10 khách hàng / trang
+            </div>
+        </div>
+    </div>
+    <!-- Content -->
+</body>
+
+</html>

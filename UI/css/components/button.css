@@ -1,0 +1,31 @@
+.button {
+    display: inline-block;
+    height: 40px;
+    outline: none;
+    background-color: transparent;
+    border: 1px solid #ccc;
+    padding-left: 16px;
+    padding-right: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+/* Button icon */
+.button .icon {
+    margin-right: 8px;
+}
+
+/* Button color primary */
+.button.is-primary {
+    background-color: green;
+    color: #fff;
+}
+
+.button.is-primary span {
+    color: #fff;
+}
+
+/* Button hover */
+.button.is-primary:hover {
+    background-color: rgb(0, 100, 0);
+}

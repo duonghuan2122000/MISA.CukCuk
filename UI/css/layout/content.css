@@ -1,0 +1,43 @@
+.content {
+    position: absolute;
+    top: 56px;
+    left: 226px;
+    right: 0;
+    bottom: 0;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.content .title-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.content .title-box .title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.content .toolbar-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.content .scroll {
+    flex: 1;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    overflow: auto;
+}
+
+.content .footer {
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    border-top: 5px solid #ccc;
+}

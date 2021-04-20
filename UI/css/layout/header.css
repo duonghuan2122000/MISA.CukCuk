@@ -1,0 +1,45 @@
+.header {
+    height: 56px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+/* Logo box */
+.header .logo-box {
+    height: 100%;
+    width: 226px;
+    display: flex;
+    align-items: center;
+    border-right: 1px solid #e5e5e5;
+}
+
+.header .logo-box .toggle {
+    margin-left: 16px;
+    font-size: 24px;
+}
+
+.header .logo-box .logo {
+    margin-left: 16px;
+    font-size: 24px;
+}
+
+/* Header toolbar box */
+.header .header-toolbar-box {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+}
+
+/* .header .header-toolbar-left {
+    
+} */
+
+.header .header-toolbar-right {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-right: 16px;
+}
