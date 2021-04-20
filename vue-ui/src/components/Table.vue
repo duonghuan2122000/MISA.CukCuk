@@ -9,7 +9,7 @@
   </table>
 </template>
 
-<style scoped>
+<style>
 .table {
   width: 100%;
   border-collapse: collapse;
@@ -23,5 +23,9 @@
 
 .table tbody tr:last-child {
   border: none;
+}
+
+.table tbody tr {
+  cursor: pointer;
 }
 </style>

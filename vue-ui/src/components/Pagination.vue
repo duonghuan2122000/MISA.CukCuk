@@ -1,16 +1,60 @@
 <template>
-  <div class="pagination">
+  <div v-if="totalPages > 1" class="pagination">
     <div class="pagination-item prev-page">
       <i class="fas fa-chevron-left"></i>
     </div>
-    <div class="pagination-item active">1</div>
-    <div class="pagination-item">2</div>
-    <div class="pagination-item">3</div>
+
+    <div
+      v-for="p in pages"
+      :key="p"
+      class="pagination-item"
+      :class="{ active: p == page }"
+    >
+      {{ p }}
+    </div>
     <div class="pagination-item next-page">
       <i class="fas fa-chevron-right"></i>
     </div>
   </div>
 </template>
+
+<script>
+import { toRefs, computed } from "vue";
+export default {
+  props: {
+    /**
+     * trang hiện tại.
+     * Mặc định là 1.
+     */
+    page: {
+      type: Number,
+      default: 1,
+    },
+
+    /**
+     * Tổng số trang.
+     * Mặc định là 0.
+     */
+    totalPages: {
+      type: Number,
+      default: 0,
+    },
+  },
+  setup(props) {
+    const { page, totalPages } = toRefs(props);
+    const pages = computed(() => {
+      let pages = [];
+      let start = page.value >= 3 ? page.value - 1 : 1;
+      let end =
+        page.value <= totalPages.value - 2 ? page.value + 1 : totalPages.value;
+      for (let i = start; i <= end; i++) pages.push(i);
+      return pages;
+    });
+
+    return { pages };
+  },
+};
+</script>
 
 <style scoped>
 .pagination {

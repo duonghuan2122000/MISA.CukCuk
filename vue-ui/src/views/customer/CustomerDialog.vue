@@ -1,6 +1,6 @@
 <template>
   <div class="dialog" :class="{ hide: !show }">
-    <div class="dialog-background"></div>
+    <div class="dialog-background" @click="closeDialog"></div>
     <div class="dialog-content">
       <div class="dialog-header">
         <div class="dialog-header-title">THÔNG TIN KHÁCH HÀNG</div>
@@ -24,7 +24,12 @@
 
       <div class="dialog-footer">
         <Button text="Lưu" />
-        <Button style="margin-left: 8px" text="Hủy" :color="null" />
+        <Button
+          style="margin-left: 8px"
+          text="Hủy"
+          :color="null"
+          @click="closeDialog"
+        />
       </div>
     </div>
   </div>

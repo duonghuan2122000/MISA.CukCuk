@@ -13,8 +13,7 @@
       <div class="toolbar-box" style="margin-top: 16px">
         <div class="toolbar-left">
           <Input />
-          <Combobox style="margin-left: 8px" />
-          <Combobox style="margin-left: 8px" />
+          <Combobox style="margin-left: 8px" :options="customerGroupOptions" />
         </div>
         <div class="toolbar-right">
           <Button :color="null" :onlyIcon="true" icon="sync" />
@@ -29,31 +28,38 @@
 
       <div class="scroll">
         <Table>
-          <template slot="head">
+          <template v-slot:head>
             <tr>
               <th>Mã khách hàng</th>
               <th>Họ và tên</th>
+              <th>Ngày sinh</th>
+              <th>Giới tính</th>
+              <th>Nhóm khách hàng</th>
               <th>Email</th>
               <th>Số điện thoại</th>
-              <th>Ngày sinh</th>
             </tr>
           </template>
-          <template slot="body">
-            <tr>
-              <td>KH001</td>
-              <td>Nguyễn Văn A</td>
-              <td>nva@gmail.com</td>
-              <td>123456789</td>
-              <td>15/04/2021</td>
+          <template v-slot:body>
+            <tr v-for="c in customers" :key="c.customerId">
+              <td>{{ c.customerCode }}</td>
+              <td>{{ c.fullName }}</td>
+              <td>{{ formatDate(c.dateOfBirth) }}</td>
+              <td>{{ c.genderName }}</td>
+              <td>{{ c.customerGroupName }}</td>
+              <td>{{ c.email }}</td>
+              <td>{{ c.phoneNumber }}</td>
             </tr>
           </template>
         </Table>
       </div>
 
       <div class="footer">
-        <div>Hiển thị 1 - 10/1000 khách hàng</div>
-        <Pagination />
-        <div>10 khách hàng / trang</div>
+        <div>
+          Hiển thị {{ startRecord }} - {{ endRecord }}/{{ totalRecord }} khách
+          hàng
+        </div>
+        <Pagination :page="page" :totalPages="totalPages" />
+        <div>{{ pageSize }} khách hàng / trang</div>
       </div>
     </div>
     <CustomerDialog
@@ -64,7 +70,8 @@
 </template>
 
 <script>
-import { ref } from "@vue/composition-api";
+import { ref, computed, onMounted } from "vue";
+// import { useRoute } from "vue-router";
 
 import Button from "../../components/Button.vue";
 import Input from "../../components/Input.vue";
@@ -72,6 +79,8 @@ import Combobox from "../../components/Combobox.vue";
 import Table from "../../components/Table.vue";
 import Pagination from "../../components/Pagination.vue";
 import CustomerDialog from "./CustomerDialog.vue";
+
+import axios from "axios";
 
 export default {
   components: {
@@ -83,17 +92,144 @@ export default {
     CustomerDialog,
   },
   setup() {
+    /**
+     * Danh sách khách hàng.
+     */
+    const customers = ref([]);
+
+    /**
+     * Tổng số trang.
+     */
+    const totalPages = ref(0);
+
+    /**
+     * Tổng số khách hàng.
+     */
+    const totalRecord = ref(0);
+
+    /**
+     * trang hiện tại.
+     */
+    const page = ref(1);
+
+    /**
+     * Số khách hàng trên một trang.
+     */
+    const pageSize = ref(20);
+
+    /**
+     * Thứ tự khách hàng bắt đầu.
+     */
+    const startRecord = computed(() => (page.value - 1) * pageSize.value + 1);
+
+    /**
+     * Thứ tự khách hàng kết thúc.
+     */
+    const endRecord = computed(() => startRecord.value + pageSize.value - 1);
+
+    /**
+     * Danh sách nhóm khách hàng.
+     */
+    const customerGroupOptions = ref([]);
+
+    /**
+     * Route
+     */
+    // const route = useRoute();
+
+    /**
+     * Hàm lấy danh sách khách hàng từ api.
+     */
+    const fetchCustomers = () => {
+      axios
+        .get(
+          `https://localhost:44378/api/v1/customers?page=${page.value}&pageSize=${pageSize.value}`
+        )
+        .then((res) => res.data)
+        .then((data) => {
+          totalPages.value = data.totalPages;
+          totalRecord.value = data.totalRecord;
+          customers.value = data.data;
+        })
+        .catch((err) => console.log(err));
+    };
+
+    const fetchCustomerGroups = () => {
+      axios
+        .get("https://localhost:44378/api/v1/customergroups")
+        .then((res) => res.data)
+        .then((data) => {
+          let options = [];
+          for (let cg of data) {
+            options.push({
+              value: cg.customerGroupId,
+              text: cg.customerGroupName,
+            });
+          }
+          customerGroupOptions.value = options;
+        });
+    };
+
+    /**
+     * Hook thực hiện khi đã load xong component.
+     */
+    onMounted(() => {
+      fetchCustomers();
+      fetchCustomerGroups();
+    });
+
+    /**
+     * Biến xác định trạng thái dialog khách hàng.
+     * CreatedBy: dbhuan (20/04/2021)
+     */
     const isShowCustomerDialog = ref(false);
 
+    /**
+     * Hàm hiển thị dialog khách hàng.
+     * CreatedBy: dbhuan (20/04/2021)
+     */
     const showCustomerDialog = () => {
       isShowCustomerDialog.value = true;
     };
 
+    /**
+     * Hàm ẩn dialog khách hàng.
+     * CreatedBy: dbhuan (20/04/2021)
+     */
     const closeCustomerDialog = () => {
       isShowCustomerDialog.value = false;
     };
 
-    return { isShowCustomerDialog, showCustomerDialog, closeCustomerDialog };
+    /**
+     * Hàm format date về dạng DD-MM-YYYY.
+     * CreatedBy: dbhuan (20/04/2021)
+     */
+    const formatDate = (dateStr) => {
+      let date = new Date(dateStr);
+      let dateString =
+        date.getDate() < 10 ? "0" + date.getDate().toString() : date.getDate();
+      let monthString =
+        date.getMonth() < 9
+          ? "0" + (date.getMonth() + 1).toString()
+          : (date.getMonth() + 1).toString();
+      let yearString = date.getFullYear().toString();
+      return `${dateString}-${monthString}-${yearString}`;
+    };
+
+    return {
+      customers,
+      totalRecord,
+      totalPages,
+      page,
+      pageSize,
+      startRecord,
+      endRecord,
+      isShowCustomerDialog,
+      showCustomerDialog,
+      closeCustomerDialog,
+      formatDate,
+      customerGroupOptions,
+    };
   },
 };
 </script>

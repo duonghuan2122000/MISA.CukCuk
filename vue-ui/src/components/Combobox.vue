@@ -1,8 +1,21 @@
 <template>
   <select class="input">
-    <option value="">Phòng ban</option>
+    <option v-for="(opt, i) in options" :key="i" :value="opt.value">{{opt.text}}</option>
   </select>
 </template>
+
+<script>
+export default {
+  props: {
+    options: {
+      type: Array
+    }
+  },
+  setup() {
+    
+  },
+}
+</script>
 
 <style scoped>
 .input {
