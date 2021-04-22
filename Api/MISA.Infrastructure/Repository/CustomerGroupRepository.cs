@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Microsoft.Extensions.Configuration;
 using MISA.Core.Entities;
 using MISA.Core.Interfaces.Repository;
 using MySqlConnector;
@@ -9,12 +10,24 @@ namespace MISA.Infrastructure.Repository
 {
     public class CustomerGroupRepository : ICustomerGroupRepository
     {
+        private IConfiguration _configuration;
+        private string _connectionString;
+
+        public CustomerGroupRepository(IConfiguration configuration)
+        {
+            _configuration = configuration;
+            _connectionString = _configuration.GetConnectionString("database");
+        }
+
+        /// <summary>
+        /// Lấy tất cả danh sách nhóm khách hàng.
+        /// </summary>
+        /// <returns>Danh sách nhóm khách hàng.</returns>
         public IEnumerable<CustomerGroup> GetCustomerGroups()
         {
             // Khởi tạo kết nối.
             // Thiết lập kết nối cơ sở dữ liệu.
-            var connectionString = "Server=47.241.69.179;Database=MF0_NVManh_CukCuk02;Uid=dev;Pwd=12345678;";
-            var connection = new MySqlConnection(connectionString);
+            var connection = new MySqlConnection(_connectionString);
 
             var customerGroups = connection.Query<CustomerGroup>("Proc_GetCustomerGroups", commandType: CommandType.StoredProcedure);
             return customerGroups;

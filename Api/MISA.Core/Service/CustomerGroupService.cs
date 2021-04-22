@@ -14,6 +14,10 @@ namespace MISA.Core.Service
             _customerGroupRepository = customerGroupRepository;
         }
 
+        /// <summary>
+        /// Lấy tất cả danh sách nhóm khách hàng.
+        /// </summary>
+        /// <returns>Danh sách nhóm khách hàng.</returns>
         public IEnumerable<CustomerGroup> GetCustomerGroups()
         {
             var customerGroups = _customerGroupRepository.GetCustomerGroups();

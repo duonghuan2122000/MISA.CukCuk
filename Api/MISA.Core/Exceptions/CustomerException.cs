@@ -2,6 +2,9 @@
 
 namespace MISA.Core.Exceptions
 {
+    /// <summary>
+    /// Class ngoại lệ của khách hàng.
+    /// </summary>
     public class CustomerException : Exception
     {
         public CustomerException(string msg) : base(msg)
@@ -9,6 +12,10 @@ namespace MISA.Core.Exceptions
 
         }
 
+        /// <summary>
+        /// Hàm kiểm tra sự tồn tại của mã khách hàng.
+        /// </summary>
+        /// <param name="customerCode">mã khách hàng cần kiểm tra.</param>
         public static void CheckCustomerCodeEmpty(string customerCode)
         {
             if (string.IsNullOrEmpty(customerCode))
@@ -22,6 +29,10 @@ namespace MISA.Core.Exceptions
             }
         }
 
+        /// <summary>
+        /// Hàm kiểm tra sự tồn tại của id khách hàng.
+        /// </summary>
+        /// <param name="customerId">id của khách hàng.</param>
         public static void CheckCustomerIdEmpty(Guid customerId)
         {
             if (string.IsNullOrEmpty(customerId.ToString()))

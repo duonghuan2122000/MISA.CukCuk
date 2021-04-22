@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MISA.Core.Interfaces.Services;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace MISA.CukCuk.Api.Controllers
 {
@@ -19,15 +16,30 @@ namespace MISA.CukCuk.Api.Controllers
             _customerGroupService = customerGroupService;
         }
 
+        /// <summary>
+        /// Lấy toàn bộ nhóm khách hàng.
+        /// </summary>
+        /// <returns>Danh sách khách hàng.</returns>
+        /// <response code="200">Có dữ liệu trả về.</response>
+        /// <response code="204">Không có dữ liệu.</response>
+        /// <response code="500">Có lỗi từ server.</response>
         [HttpGet]
         public IActionResult GetCustomerGroups()
         {
-            var customerGroups = _customerGroupService.GetCustomerGroups();
-            if (customerGroups.Any())
+            try
             {
-                return Ok(customerGroups);
+                var customerGroups = _customerGroupService.GetCustomerGroups();
+                if (customerGroups.Any())
+                {
+                    return Ok(customerGroups);
+                }
+                return NoContent();
             }
-            return NoContent();
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
     }
