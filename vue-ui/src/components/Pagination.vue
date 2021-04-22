@@ -1,20 +1,29 @@
 <template>
   <div v-if="totalPages > 1" class="pagination">
-    <div class="pagination-item prev-page">
+    <router-link
+      v-if="page > 1"
+      class="pagination-item prev-page"
+      :to="'?page=' + (page - 1)"
+    >
       <i class="fas fa-chevron-left"></i>
-    </div>
+    </router-link>
 
-    <div
+    <router-link
       v-for="p in pages"
       :key="p"
       class="pagination-item"
       :class="{ active: p == page }"
+      :to="'?page=' + p"
     >
       {{ p }}
-    </div>
-    <div class="pagination-item next-page">
+    </router-link>
+    <router-link
+      v-if="page < totalPages"
+      class="pagination-item next-page"
+      :to="'?page=' + (page + 1)"
+    >
       <i class="fas fa-chevron-right"></i>
-    </div>
+    </router-link>
   </div>
 </template>
 
@@ -73,6 +82,7 @@ export default {
   margin-left: 4px;
   margin-right: 4px;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .pagination .pagination-item.active {

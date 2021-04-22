@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div class="content">
+    <div v-if="!isLoading && !isSuccess" class="content error">
+      Error. Vui lòng thử lại.
+    </div>
+    <div v-else class="content">
       <div class="title-box">
         <div class="title">DANH SÁCH KHÁCH HÀNG</div>
         <Button
@@ -12,13 +15,28 @@
 
       <div class="toolbar-box" style="margin-top: 16px">
         <div class="toolbar-left">
-          <Input />
-          <Combobox style="margin-left: 8px" :options="customerGroupOptions" />
+          <Input
+            placeholder="Nhập mã, họ tên hoặc số điện thoại khách hàng"
+            style="width: 300px"
+          />
+          <Combobox
+            style="margin-left: 8px"
+            :options="customerGroupOptions"
+            :modelValue="selectedCustomerGroupId"
+            @update:modelValue="selectedCustomerGroupId = $event"
+          />
         </div>
         <div class="toolbar-right">
-          <Button :color="null" :onlyIcon="true" icon="sync" />
+          <Button
+            :color="null"
+            :onlyIcon="true"
+            icon="sync"
+            @click="refreshData"
+          />
           <Button
             style="margin-left: 8px"
+            styleBtn="background-color: #f20"
+            styleIcon="color: #fff"
             :color="null"
             :onlyIcon="true"
             icon="trash"
@@ -27,7 +45,10 @@
       </div>
 
       <div class="scroll">
-        <Table>
+        <div v-if="isLoading" class="loading">
+          <div class="loader"></div>
+        </div>
+        <Table v-else-if="isSuccess">
           <template v-slot:head>
             <tr>
               <th>Mã khách hàng</th>
@@ -70,8 +91,8 @@
 </template>
 
 <script>
-import { ref, computed, onMounted } from "vue";
-// import { useRoute } from "vue-router";
+import { ref, computed, onMounted, watch } from "vue";
+import { useRoute } from "vue-router";
 
 import Button from "../../components/Button.vue";
 import Input from "../../components/Input.vue";
@@ -80,7 +101,9 @@ import Table from "../../components/Table.vue";
 import Pagination from "../../components/Pagination.vue";
 import CustomerDialog from "./CustomerDialog.vue";
 
-import axios from "axios";
+import StateEnum from "../../store/StateEnum";
+
+import axios from "../../helpers/axios";
 
 export default {
   components: {
@@ -92,6 +115,8 @@ export default {
     CustomerDialog,
   },
   setup() {
+    const state = ref(StateEnum.LOADING);
+
     /**
      * Danh sách khách hàng.
      */
@@ -115,7 +140,7 @@ export default {
     /**
      * Số khách hàng trên một trang.
      */
-    const pageSize = ref(20);
+    const pageSize = ref(10);
 
     /**
      * Thứ tự khách hàng bắt đầu.
@@ -133,25 +158,53 @@ export default {
     const customerGroupOptions = ref([]);
 
     /**
+     * id nhóm khách hàng đang được chọn ở combobox nhóm khách hàng.
+     */
+    const selectedCustomerGroupId = ref("");
+
+    /**
      * Route
      */
-    // const route = useRoute();
+    const route = useRoute();
+
+    const isLoading = computed(() => state.value == StateEnum.LOADING);
+    const isSuccess = computed(() => state.value == StateEnum.SUCCESS);
+
+    /**
+     * Khởi tạo data.
+     */
+    const initialData = () => {
+      if (route.query && route.query.page) {
+        page.value = parseInt(route.query.page);
+      }
+    };
+
+    /**
+     * Hàm refresh dữ liệu.
+     */
+    const refreshData = () => {
+      page.value = 1;
+      fetchCustomers();
+    };
 
     /**
      * Hàm lấy danh sách khách hàng từ api.
      */
     const fetchCustomers = () => {
+      state.value = StateEnum.LOADING;
       axios
-        .get(
-          `https://localhost:44378/api/v1/customers?page=${page.value}&pageSize=${pageSize.value}`
-        )
+        .get(`/api/v1/customers?page=${page.value}&pageSize=${pageSize.value}`)
         .then((res) => res.data)
         .then((data) => {
           totalPages.value = data.totalPages;
           totalRecord.value = data.totalRecord;
           customers.value = data.data;
+          state.value = StateEnum.SUCCESS;
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          console.log(err);
+          state.value = StateEnum.ERROR;
+        });
     };
 
     const fetchCustomerGroups = () => {
@@ -174,6 +227,8 @@ export default {
      * Hook thực hiện khi đã load xong component.
      */
     onMounted(() => {
+      console.log(route);
+      initialData();
       fetchCustomers();
       fetchCustomerGroups();
     });
@@ -182,7 +237,7 @@ export default {
      * Biến xác định trạng thái dialog khách hàng.
      * CreatedBy: dbhuan (20/04/2021)
      */
-    const isShowCustomerDialog = ref(true);
+    const isShowCustomerDialog = ref(false);
 
     /**
      * Hàm hiển thị dialog khách hàng.
@@ -216,14 +271,26 @@ export default {
       return `${dateString}-${monthString}-${yearString}`;
     };
 
+    watch(
+      () => route.query,
+      () => {
+        initialData();
+        fetchCustomers();
+      }
+    );
+
     return {
       customers,
       totalRecord,
       totalPages,
+      isLoading,
+      isSuccess,
+      refreshData,
       page,
       pageSize,
       startRecord,
       endRecord,
+      selectedCustomerGroupId,
       isShowCustomerDialog,
       showCustomerDialog,
       closeCustomerDialog,
@@ -263,6 +330,11 @@ export default {
   justify-content: space-between;
 }
 
+.content .toolbar-left {
+  display: flex;
+  flex-direction: row;
+}
+
 .content .scroll {
   flex: 1;
   margin-top: 16px;
@@ -277,5 +349,35 @@ export default {
   justify-content: space-between;
   flex-wrap: wrap;
   border-top: 5px solid #ccc;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Loader */
+.loader {
+  border: 2px solid #f3f3f3; /* Light grey */
+  border-top: 2px solid green; /* Blue */
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 2s linear infinite;
+}
+
+.error {
+  text-align: center;
+  font-size: 15px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>

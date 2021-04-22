@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="logo-box">
-      <div class="toggle fas fa-bars"></div>
+      <div class="toggle fas fa-bars" @click="toggleNavbar"></div>
       <div class="logo">Misa CukCuk</div>
     </div>
 
@@ -31,6 +31,13 @@ export default {
   components: {
     Dropdown,
   },
+  setup(_, {emit}){
+    const toggleNavbar = () => {
+      emit('toggleNavbar');
+    }
+
+    return {toggleNavbar}
+  }
 };
 </script>
 
@@ -54,6 +61,7 @@ export default {
 .header .logo-box .toggle {
   margin-left: 16px;
   font-size: 24px;
+  cursor: pointer;
 }
 
 .header .logo-box .logo {

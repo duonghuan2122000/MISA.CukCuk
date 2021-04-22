@@ -5,8 +5,8 @@
       <span>{{ text }}</span>
     </button>
 
-    <button v-else class="button">
-      <span class="fas" :class="'fa-' + icon"></span>
+    <button v-else class="button" :style="styleBtn">
+      <span :style="styleIcon" class="fas" :class="'fa-' + icon"></span>
     </button>
   </div>
 </template>
@@ -20,6 +20,22 @@ export default {
     onlyIcon: {
       type: Boolean,
       default: false,
+    },
+
+    /**
+     * style cho button.
+     */
+    styleBtn: {
+      type: String,
+      default: "",
+    },
+
+    /**
+     * Style cho icon của button icon.
+     */
+    styleIcon: {
+      type: String,
+      default: "",
     },
 
     /**
