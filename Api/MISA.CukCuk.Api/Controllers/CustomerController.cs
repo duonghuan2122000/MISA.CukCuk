@@ -30,11 +30,11 @@ namespace MISA.CukCuk.Api.Controllers
         /// <response code="204">Không có dữ liệu.</response>
         /// CreatedBy: dbhuan (19/04/2021)
         [HttpGet]
-        public IActionResult GetCustomers([FromQuery] int page = 1, [FromQuery] int pageSize = 10, [FromQuery] string fullName = "", [FromQuery] string phoneNumber = "", [FromQuery] Guid? customerGroupId = null)
+        public IActionResult GetCustomers(CustomerFilter customerFilter)
         {
             try
             {
-                var paging = _customerService.GetCustomers(page, pageSize, fullName, phoneNumber, customerGroupId);
+                var paging = _customerService.GetCustomers(customerFilter);
 
                 // Xử lý kết quả trả về cho client.
                 if (paging.data.Any())

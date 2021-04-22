@@ -50,16 +50,12 @@ namespace MISA.Core.Service
         /// <summary>
         /// Lấy danh sách khách hàng có lọc
         /// </summary>
-        /// <param name="page">Trang hiện tại.</param>
-        /// <param name="pageSize">Số khách hàng trên một trang.</param>
-        /// <param name="fullName">Lọc theo tên khách hàng.</param>
-        /// <param name="phoneNumber">Lọc theo số điện thoại.</param>
-        /// <param name="customerGroupId">Lọc theo nhóm khách hàng.</param>
+        /// <param name="customerFilter">Điều kiện lọc danh sách khách hàng.</param>
         /// <returns>Danh sách khách hàng.</returns>
         /// CreatedBy: dbhuan(20/04/2021)
-        public Paging<Customer> GetCustomers(int page, int pageSize, string fullName, string phoneNumber, Guid? customerGroupId)
+        public Paging<Customer> GetCustomers(CustomerFilter customerFilter)
         {
-            var paging = _customerRepository.GetCustomers(page, pageSize, fullName, phoneNumber, customerGroupId);
+            var paging = _customerRepository.GetCustomers(customerFilter);
             return paging;
         }
 

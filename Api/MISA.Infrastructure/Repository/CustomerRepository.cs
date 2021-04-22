@@ -77,33 +77,29 @@ namespace MISA.Infrastructure.Repository
         /// <summary>
         /// Lấy danh sách khách hàng có lọc
         /// </summary>
-        /// <param name="page">Trang hiện tại.</param>
-        /// <param name="pageSize">Số khách hàng trên một trang.</param>
-        /// <param name="fullName">Lọc theo tên khách hàng.</param>
-        /// <param name="phoneNumber">Lọc theo số điện thoại.</param>
-        /// <param name="customerGroupId">Lọc theo nhóm khách hàng.</param>
+        /// <param name="customerFilter">Điều kiện lọc danh sách khách hàng.</param>
         /// <returns>Danh sách khách hàng.</returns>
         /// CreatedBy: dbhuan(20/04/2021)
-        public Paging<Customer> GetCustomers(int page, int pageSize, string fullName, string phoneNumber, Guid? customerGroupId)
+        public Paging<Customer> GetCustomers(CustomerFilter customerFilter)
         {
             // Thiết lập kết nối cơ sở dữ liệu.
             var connection = new MySqlConnection(_connectionString);
 
             // Tính tổng số khách hàng có điều kiện.
-            var totalRecord = connection.QueryFirstOrDefault<int>("Proc_H_GetTotalCustomers", new { fullName, phoneNumber, customerGroupId }, commandType: CommandType.StoredProcedure);
+            var totalRecord = connection.QueryFirstOrDefault<int>("Proc_H_GetTotalCustomers", customerFilter, commandType: CommandType.StoredProcedure);
 
             // Tính tổng số trang.
-            var totalPages = Math.Ceiling((decimal)totalRecord / pageSize);
+            var totalPages = Math.Ceiling((decimal)totalRecord / customerFilter.pageSize);
 
             // Lấy danh sách khách hàng có phân trang.
-            var customers = connection.Query<Customer>("Proc_H_GetCustomers", new { page, pageSize, fullName, phoneNumber, customerGroupId }, commandType: CommandType.StoredProcedure);
+            var customers = connection.Query<Customer>("Proc_H_GetCustomers", customerFilter, commandType: CommandType.StoredProcedure);
             var paging = new Paging<Customer>()
             {
                 totalRecord = totalRecord,
                 totalPages = (int)totalPages,
                 data = customers,
-                page = page,
-                pageSize = pageSize
+                page = customerFilter.page,
+                pageSize = customerFilter.pageSize
             };
             return paging;
         }

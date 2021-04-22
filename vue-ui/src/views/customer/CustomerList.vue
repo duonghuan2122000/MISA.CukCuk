@@ -159,7 +159,7 @@ export default {
         .get("https://localhost:44378/api/v1/customergroups")
         .then((res) => res.data)
         .then((data) => {
-          let options = [];
+          let options = [{ value: "", text: "Nhóm khách hàng" }];
           for (let cg of data) {
             options.push({
               value: cg.customerGroupId,
@@ -182,7 +182,7 @@ export default {
      * Biến xác định trạng thái dialog khách hàng.
      * CreatedBy: dbhuan (20/04/2021)
      */
-    const isShowCustomerDialog = ref(false);
+    const isShowCustomerDialog = ref(true);
 
     /**
      * Hàm hiển thị dialog khách hàng.
