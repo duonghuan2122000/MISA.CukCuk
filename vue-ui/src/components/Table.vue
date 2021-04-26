@@ -28,4 +28,9 @@
 .table tbody tr {
   cursor: pointer;
 }
+
+.table tbody tr:hover,
+.table tbody tr.selected {
+  background-color: #e5e5e5;
+}
 </style>

@@ -1,21 +1,24 @@
 <template>
-  <select class="input">
-    <option v-for="(opt, i) in options" :key="i" :value="opt.value">{{opt.text}}</option>
+  <select
+    :value="modelValue"
+    @input="$emit('update:modelValue', $event.target.value)"
+    class="input"
+  >
+    <option v-for="(opt, i) in options" :key="i" :value="opt.value">
+      {{ opt.text }}
+    </option>
   </select>
 </template>
 
 <script>
 export default {
   props: {
-    options: {
-      type: Array
-    },
+    options: Array,
 
+    modelValue: String,
   },
-  setup() {
-    
-  },
-}
+  emits: ["update:modelValue"],
+};
 </script>
 
 <style scoped>

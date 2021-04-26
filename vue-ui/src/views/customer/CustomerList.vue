@@ -18,12 +18,12 @@
           <Input
             placeholder="Nhập mã, họ tên hoặc số điện thoại khách hàng"
             style="width: 300px"
+            v-model="customerFilter"
           />
           <Combobox
             style="margin-left: 8px"
             :options="customerGroupOptions"
-            :modelValue="selectedCustomerGroupId"
-            @update:modelValue="selectedCustomerGroupId = $event"
+            v-model="selectedCustomerGroupId"
           />
         </div>
         <div class="toolbar-right">
@@ -48,30 +48,38 @@
         <div v-if="isLoading" class="loading">
           <div class="loader"></div>
         </div>
-        <Table v-else-if="isSuccess">
-          <template v-slot:head>
-            <tr>
-              <th>Mã khách hàng</th>
-              <th>Họ và tên</th>
-              <th>Ngày sinh</th>
-              <th>Giới tính</th>
-              <th>Nhóm khách hàng</th>
-              <th>Email</th>
-              <th>Số điện thoại</th>
-            </tr>
-          </template>
-          <template v-slot:body>
-            <tr v-for="c in customers" :key="c.customerId">
-              <td>{{ c.customerCode }}</td>
-              <td>{{ c.fullName }}</td>
-              <td>{{ formatDate(c.dateOfBirth) }}</td>
-              <td>{{ c.genderName }}</td>
-              <td>{{ c.customerGroupName }}</td>
-              <td>{{ c.email }}</td>
-              <td>{{ c.phoneNumber }}</td>
-            </tr>
-          </template>
-        </Table>
+        <div v-else-if="isSuccess">
+          <Table v-if="customers.length > 0">
+            <template v-slot:head>
+              <tr>
+                <th>Mã khách hàng</th>
+                <th>Họ và tên</th>
+                <th>Ngày sinh</th>
+                <th>Giới tính</th>
+                <th>Nhóm khách hàng</th>
+                <th>Email</th>
+                <th>Số điện thoại</th>
+              </tr>
+            </template>
+            <template v-slot:body>
+              <tr
+                v-for="c in customers"
+                :key="c.customerId"
+                :class="{ selected: selectedCustomerId == c.customerId }"
+                @click="onSelectCustomer(c.customerId)"
+              >
+                <td>{{ c.customerCode }}</td>
+                <td>{{ c.fullName }}</td>
+                <td>{{ formatDate(c.dateOfBirth) }}</td>
+                <td>{{ c.genderName }}</td>
+                <td>{{ c.customerGroupName }}</td>
+                <td>{{ c.email }}</td>
+                <td>{{ c.phoneNumber }}</td>
+              </tr>
+            </template>
+          </Table>
+          <div v-else>Không có dữ liệu</div>
+        </div>
       </div>
 
       <div class="footer">
@@ -87,6 +95,11 @@
       :show="isShowCustomerDialog"
       @onClose="closeCustomerDialog"
     />
+    <ConfirmDialog
+      :show="isShowConfirmDialog"
+      message="Bạn có chắc muốn xóa khách hàng này không?"
+      @onClose="closeConfirmDialog"
+    />
   </div>
 </template>
 
@@ -99,6 +112,7 @@ import Input from "../../components/Input.vue";
 import Combobox from "../../components/Combobox.vue";
 import Table from "../../components/Table.vue";
 import Pagination from "../../components/Pagination.vue";
+import ConfirmDialog from "../../components/ConfirmDialog.vue";
 import CustomerDialog from "./CustomerDialog.vue";
 
 import StateEnum from "../../store/StateEnum";
@@ -112,6 +126,7 @@ export default {
     Combobox,
     Table,
     Pagination,
+    ConfirmDialog,
     CustomerDialog,
   },
   setup() {
@@ -163,10 +178,20 @@ export default {
     const selectedCustomerGroupId = ref("");
 
     /**
+     * Từ khóa filter danh sách khách hàng theo tên hoặc số điện thoại.
+     */
+    const customerFilter = ref("");
+
+    const selectedCustomerId = ref(null);
+
+    /**
      * Route
      */
     const route = useRoute();
 
+    /**
+     * Trạng thái trang web.
+     */
     const isLoading = computed(() => state.value == StateEnum.LOADING);
     const isSuccess = computed(() => state.value == StateEnum.SUCCESS);
 
@@ -184,6 +209,8 @@ export default {
      */
     const refreshData = () => {
       page.value = 1;
+      selectedCustomerGroupId.value = "";
+      customerFilter.value = "";
       fetchCustomers();
     };
 
@@ -193,12 +220,14 @@ export default {
     const fetchCustomers = () => {
       state.value = StateEnum.LOADING;
       axios
-        .get(`/api/v1/customers?page=${page.value}&pageSize=${pageSize.value}`)
+        .get(
+          `/api/v1/customers?page=${page.value}&pageSize=${pageSize.value}&filter=${customerFilter.value}&customerGroupId=${selectedCustomerGroupId.value}`
+        )
         .then((res) => res.data)
         .then((data) => {
-          totalPages.value = data.totalPages;
-          totalRecord.value = data.totalRecord;
-          customers.value = data.data;
+          totalPages.value = data.totalPages || 0;
+          totalRecord.value = data.totalRecord || 0;
+          customers.value = data.data || [];
           state.value = StateEnum.SUCCESS;
         })
         .catch((err) => {
@@ -209,7 +238,7 @@ export default {
 
     const fetchCustomerGroups = () => {
       axios
-        .get("https://localhost:44378/api/v1/customergroups")
+        .get("/api/v1/customergroups")
         .then((res) => res.data)
         .then((data) => {
           let options = [{ value: "", text: "Nhóm khách hàng" }];
@@ -227,7 +256,6 @@ export default {
      * Hook thực hiện khi đã load xong component.
      */
     onMounted(() => {
-      console.log(route);
       initialData();
       fetchCustomers();
       fetchCustomerGroups();
@@ -255,6 +283,24 @@ export default {
       isShowCustomerDialog.value = false;
     };
 
+    const isShowConfirmDialog = ref(false);
+
+    const showConfirmDialog = () => {
+      isShowConfirmDialog.value = true;
+    };
+
+    const closeConfirmDialog = () => {
+      isShowConfirmDialog.value = false;
+    };
+
+    const onSelectCustomer = (customerId) => {
+      if (customerId != selectedCustomerId.value) {
+        selectedCustomerId.value = customerId;
+      } else {
+        selectedCustomerId.value = null;
+      }
+    };
+
     /**
      * Hàm format date về dạng DD-MM-YYYY.
      * CreatedBy: dbhuan (20/04/2021)
@@ -271,13 +317,22 @@ export default {
       return `${dateString}-${monthString}-${yearString}`;
     };
 
-    watch(
-      () => route.query,
-      () => {
+    watch([selectedCustomerGroupId, () => route.query], () => {
+      initialData();
+      fetchCustomers();
+    });
+
+    let timeOut = null;
+
+    watch(customerFilter, () => {
+      clearTimeout(timeOut);
+
+      timeOut = setTimeout(() => {
+        console.log("huan");
         initialData();
         fetchCustomers();
-      }
-    );
+      }, 1000);
+    });
 
     return {
       customers,
@@ -286,14 +341,20 @@ export default {
       isLoading,
       isSuccess,
       refreshData,
+      selectedCustomerId,
       page,
       pageSize,
       startRecord,
       endRecord,
       selectedCustomerGroupId,
+      customerFilter,
       isShowCustomerDialog,
       showCustomerDialog,
       closeCustomerDialog,
+      isShowConfirmDialog,
+      showConfirmDialog,
+      closeConfirmDialog,
+      onSelectCustomer,
       formatDate,
       customerGroupOptions,
     };

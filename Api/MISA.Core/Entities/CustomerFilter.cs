@@ -23,14 +23,9 @@ namespace MISA.Core.Entities
         public int pageSize { get; set; } = 10;
 
         /// <summary>
-        /// Lọc theo tên.
+        /// Lọc theo tên hoặc số điện thoại.
         /// </summary>
-        public string fullName { get; set; } = "";
-
-        /// <summary>
-        /// Lọc theo số điện thoại.
-        /// </summary>
-        public string phoneNumber { get; set; } = "";
+        public string filter { get; set; } = "";
 
         /// <summary>
         /// Lọc theo id nhóm khách hàng.
