@@ -32,9 +32,16 @@ export default {
     Button,
   },
   props: {
-    show: {
-      type: Boolean,
-    },
+    /**
+     * Biến xác định trạng thái dialog.
+     * CreatedBy: dbhuan (27/04/2021)
+     */
+    show: Boolean,
+
+    /**
+     * Lời nhắn cần hiển thị trên dialog.
+     * CreatedBy: dbhuan (27/04/2021)
+     */
     message: String,
   },
   emits: ["onChange", "onOk", "onCancel"],

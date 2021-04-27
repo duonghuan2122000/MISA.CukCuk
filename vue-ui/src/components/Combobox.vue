@@ -13,8 +13,16 @@
 <script>
 export default {
   props: {
+    /**
+     * Danh sách các lựa chọn trong thẻ option.
+     * CreatedBy: dbhuan (27/04/2021)
+     */
     options: Array,
 
+    /**
+     * Biến dùng để sử dụng cho 2 way binding. v-model.
+     * CreatedBy: dbhuan (27/04/2021)
+     */
     modelValue: String,
   },
   emits: ["update:modelValue"],

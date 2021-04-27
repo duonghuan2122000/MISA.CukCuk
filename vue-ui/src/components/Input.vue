@@ -14,6 +14,7 @@ export default {
     /**
      * Text hint của input.
      * Mặc đinh là "".
+     * CreatedBy: dbhuan (27/04/2021)
      */
     placeholder: {
       type: String,
@@ -23,12 +24,17 @@ export default {
     /**
      * Type của input.
      * Mặc định: text
+     * CreatedBy: dbhuan (27/04/2021)
      */
     inputType: {
       type: String,
       default: "text",
     },
 
+    /**
+     * Biến dùng cho 2 way binding. v-model
+     * CreatedBy: dbhuan (27/04/2021)
+     */
     modelValue: String,
   },
   emits: ["update:modelValue"],

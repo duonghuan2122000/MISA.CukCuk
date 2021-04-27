@@ -34,6 +34,7 @@ export default {
     /**
      * trang hiện tại.
      * Mặc định là 1.
+     * CreatedBy: dbhuan (27/04/2021)
      */
     page: {
       type: Number,
@@ -43,6 +44,7 @@ export default {
     /**
      * Tổng số trang.
      * Mặc định là 0.
+     * CreatedBy: dbhuan (27/04/2021)
      */
     totalPages: {
       type: Number,
@@ -51,6 +53,11 @@ export default {
   },
   setup(props) {
     const { page, totalPages } = toRefs(props);
+
+    /**
+     * Xác định đoạn trang cần hiển thị.
+     * CreatedBy: dbhuan (27/04/2021)
+     */
     const pages = computed(() => {
       let pages = [];
       let start = page.value >= 3 ? page.value - 1 : 1;

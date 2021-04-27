@@ -19,21 +19,45 @@
                   <label
                     >Mã khách hàng (<span style="color: red">*</span>)</label
                   >
-                  <Input />
+                  <Input
+                    :modelValue="customer && customer.customerCode"
+                    @update:modelValue="
+                      $emit('update:customer', {
+                        ...customer,
+                        customerCode: $event,
+                      })
+                    "
+                  />
                 </div>
               </div>
 
               <div class="col-6">
                 <div class="field">
                   <label>Họ và tên (<span style="color: red">*</span>)</label>
-                  <Input />
+                  <Input
+                    :modelValue="customer && customer.fullName"
+                    @update:modelValue="
+                      $emit('update:customer', {
+                        ...customer,
+                        fullName: $event,
+                      })
+                    "
+                  />
                 </div>
               </div>
 
               <div class="col-6">
                 <div class="field">
                   <label>Mã thẻ thành viên</label>
-                  <Input />
+                  <Input
+                    :modelValue="customer && customer.memberCardCode"
+                    @update:modelValue="
+                      $emit('update:customer', {
+                        ...customer,
+                        memberCardCode: $event,
+                      })
+                    "
+                  />
                 </div>
               </div>
 
@@ -42,6 +66,13 @@
                   <label>Nhóm khách hàng</label>
                   <Combobox
                     :options="customerGroupOptions"
+                    :modelValue="customer && customer.customerGroupId"
+                    @update:modelValue="
+                      $emit('update:customer', {
+                        ...customer,
+                        customerGroupId: $event,
+                      })
+                    "
                   />
                 </div>
               </div>
@@ -49,7 +80,16 @@
               <div class="col-6">
                 <div class="field">
                   <label>Ngày sinh</label>
-                  <Input inputType="date" />
+                  <Input
+                    inputType="date"
+                    :modelValue="customer && customer.dateOfBirth"
+                    @update:modelValue="
+                      $emit('update:customer', {
+                        ...customer,
+                        dateOfBirth: $event,
+                      })
+                    "
+                  />
                 </div>
               </div>
 
@@ -61,6 +101,13 @@
                       <Radio
                         name="gender"
                         value="0"
+                        :modelValue="customer && customer.gender"
+                        @update:modelValue="
+                          $emit('update:customer', {
+                            ...customer,
+                            gender: $event,
+                          })
+                        "
                       />
                       <label>Nữ</label>
                     </div>
@@ -68,6 +115,13 @@
                       <Radio
                         name="gender"
                         value="1"
+                        :modelValue="customer && customer.gender"
+                        @update:modelValue="
+                          $emit('update:customer', {
+                            ...customer,
+                            gender: $event,
+                          })
+                        "
                       />
                       <label>Nam</label>
                     </div>
@@ -75,6 +129,13 @@
                       <Radio
                         name="gender"
                         value="2"
+                        :modelValue="customer && customer.gender"
+                        @update:modelValue="
+                          $emit('update:customer', {
+                            ...customer,
+                            gender: $event,
+                          })
+                        "
                       />
                       <label>Khác</label>
                     </div>
@@ -87,35 +148,63 @@
           <div class="col-8">
             <div class="field">
               <label>Email</label>
-              <Input />
+              <Input
+                :modelValue="customer && customer.email"
+                @update:modelValue="
+                  $emit('update:customer', { ...customer, email: $event })
+                "
+              />
             </div>
           </div>
 
           <div class="col-4">
             <div class="field">
               <label>Số điện thoại (<span style="color: red">*</span>)</label>
-              <Input />
+              <Input
+                :modelValue="customer && customer.phoneNumber"
+                @update:modelValue="
+                  $emit('update:customer', { ...customer, phoneNumber: $event })
+                "
+              />
             </div>
           </div>
 
           <div class="col-8">
             <div class="field">
               <label>Tên công ty</label>
-              <Input />
+              <Input
+                :modelValue="customer && customer.companyName"
+                @update:modelValue="
+                  $emit('update:customer', { ...customer, companyName: $event })
+                "
+              />
             </div>
           </div>
 
           <div class="col-4">
             <div class="field">
               <label>Mã số thuế</label>
-              <Input />
+              <Input
+                :modelValue="customer && customer.companyTaxCode"
+                @update:modelValue="
+                  $emit('update:customer', {
+                    ...customer,
+                    companyTaxCode: $event,
+                  })
+                "
+              />
             </div>
           </div>
 
           <div class="col-12">
             <div class="field">
               <label>Địa chỉ</label>
-              <Input />
+              <Input
+                :modelValue="customer && customer.address"
+                @update:modelValue="
+                  $emit('update:customer', { ...customer, address: $event })
+                "
+              />
             </div>
           </div>
         </div>
@@ -147,26 +236,28 @@ export default {
     Radio,
   },
   props: {
+    /**
+     * Biến xác định trạng thái dialog.
+     * CreatedBy: dbhuan (27/04/2021)
+     */
     show: Boolean,
+
+    /**
+     * Danh sách nhóm khách hàng.
+     * CreatedBy: dbhuan (27/04/2021)
+     */
     customerGroupOptions: Array,
-    // customer: {
-    //   type: Object,
-    //   default: {
-    //     customerCode: null,
-    //     fullName: null,
-    //     gender: null,
-    //     memberCardCode: null,
-    //     customerGroupId: null,
-    //     phoneNumber: null,
-    //     dateOfBirth: null,
-    //     companyName: null,
-    //     companyTaxCode: null,
-    //     email: null,
-    //     address: null,
-    //   },
-    // },
+
+    /**
+     * Thông tin khách hàng. Mặc định là null.
+     * CreatedBy: dbhuan (27/04/2021)
+     */
+    customer: {
+      type: Object,
+      default: null,
+    },
   },
-  emits: ["onChange"],
+  emits: ["onChange", "update:customer"],
 };
 </script>
 

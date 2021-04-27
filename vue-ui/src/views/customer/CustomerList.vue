@@ -98,6 +98,7 @@
     </div>
     <CustomerDialog
       :show="isShowCustomerDialog"
+      v-model:customer="customerModify"
       :customerGroupOptions="customerGroupOptions.slice(1)"
       @onChange="setStateCustomerDialog"
     />
@@ -199,6 +200,8 @@ export default {
 
     const selectedCustomerDel = ref(null);
 
+    const customerModify = ref(null);
+
     /**
      * Route
      */
@@ -279,7 +282,7 @@ export default {
      * Biến xác định trạng thái dialog khách hàng.
      * CreatedBy: dbhuan (20/04/2021)
      */
-    const isShowCustomerDialog = ref(true);
+    const isShowCustomerDialog = ref(false);
 
     /**
      * Hàm set trạng thái dialog khách hàng.
@@ -289,20 +292,50 @@ export default {
       isShowCustomerDialog.value = state;
     };
 
+    /**
+     * Lời nhắn cần hiển thị dialog confirm.
+     * CreatedBy: dbhuan (27/04/2021)
+     */
     const msgConfirmDialog = ref("");
+
+    /**
+     * Biến xác định trạng thái dialog confirm.
+     * CreatedBy: dbhuan (27/04/2021)
+     */
     const isShowConfirmDialog = ref(false);
 
+    /**
+     * Hàm set trạng thái dialog confirm.
+     * CreatedBy: dbhuan (27/04/2021)
+     */
     const setStateConfirmDialog = (state) => {
       isShowConfirmDialog.value = state;
     };
 
+    /**
+     * Lời nhắn hiển thị trên dialog alert.
+     * CreatedBy: dbhuan (27/04/2021)
+     */
     const msgAlertDialog = ref("");
+
+    /**
+     * Biến xác định trạng thái dialog alert.
+     * CreatedBy: dbhuan (27/04/2021)
+     */
     const isShowAlertDialog = ref(false);
 
+    /**
+     * Hàm set trạng thái dialog alert.
+     * CreatedBy: dbhuan (27/04/2021)
+     */
     const setStateAlertDialog = (state) => {
       isShowAlertDialog.value = state;
     };
 
+    /**
+     * Hàm click chọn một khách hàng trên bảng.
+     * CreatedBy: dbhuan (27/04/2021)
+     */
     const onSelectCustomer = (customer) => {
       if (
         !selectedCustomerDel.value ||
@@ -314,35 +347,53 @@ export default {
       }
     };
 
+    /**
+     * Hàm click button xóa khách hàng.
+     * CreatedBy: dbhuan (27/04/2021)
+     */
     const onClickDeleteCustomer = () => {
       if (selectedCustomerDel.value == null) {
+        // nếu khách hàng cần xóa chưa được chọn thì hiển thị dialog alert.
         msgAlertDialog.value =
           "Bạn phải chọn khách hàng cần xóa trước khi chọn nút xóa.";
         setStateAlertDialog(true);
         return;
       }
+      // Hiển thị dialog confirm xác nhận xóa.
       msgConfirmDialog.value = `Bạn có chắc muốn xóa khách hàng [${selectedCustomerDel.value.customerCode}] này khỏi hệ thống không ?`;
       setStateConfirmDialog(true);
     };
 
+    /**
+     * Hàm xóa khách hàng.
+     */
     const delCustomer = () => {
+      // Ẩn dialog confirm và set lời nhắn confirm là "".
       setStateConfirmDialog(false);
       msgConfirmDialog.value = "";
+
+      // call api xóa khách hàng.
       axios
         .delete(`/api/v1/customers/${selectedCustomerDel.value.customerId}`)
         .then((res) => res.data)
         .then(() => {
+          // thành công thì hiển thị thông báo thành công trên dialog alert.
           fetchCustomers();
           msgAlertDialog.value = "Xóa thành công.";
           setStateAlertDialog(true);
         })
         .catch(() => {
+          // thất bại thì hiển thị thông báo thất bại trên dialog alert.
           msgAlertDialog.value = "Xóa thất bại.";
           setStateAlertDialog(true);
         })
+        // thực hiện reload lại dữ liệu sau khi call api.
         .finally(() => cancelDelCustomer());
     };
 
+    /**
+     * Hàm hủy xóa khách hàng.
+     */
     const cancelDelCustomer = () => {
       setStateConfirmDialog(false);
       msgConfirmDialog.value = "";
@@ -365,17 +416,30 @@ export default {
       return `${dateString}-${monthString}-${yearString}`;
     };
 
+    /**
+     * Hàm theo dõi sự thay đổi của bảng chọn nhóm khách hàng và trang trên router.
+     * CreatedBy: dbhuan (27/04/2021)
+     */
     watch([selectedCustomerGroupId, () => route.query], () => {
+      // Thực hiện load lại dữ liệu khi có sự thay đổi.
       initialData();
       fetchCustomers();
     });
 
+    /**
+     * thiết lập một debounce.
+     */
     let timeOut = null;
-
+    /**
+     * Hàm theo dõi sự thay đổi của input search khách hàng.
+     * CreatedBy: dbhuan (27/04/2021)
+     */
     watch(customerFilter, () => {
+      // thực hiện debounce để lấy dữ liệu cuối cùng mà người dùng nhập.
       clearTimeout(timeOut);
 
       timeOut = setTimeout(() => {
+        // load dữ liệu theo từ khóa tương ứng.
         initialData();
         fetchCustomers();
       }, 1000);
@@ -393,6 +457,7 @@ export default {
       pageSize,
       startRecord,
       endRecord,
+      customerModify,
       selectedCustomerGroupId,
       customerFilter,
       isShowCustomerDialog,

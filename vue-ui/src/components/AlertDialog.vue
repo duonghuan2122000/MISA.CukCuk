@@ -18,13 +18,26 @@
 import { toRefs, watchEffect } from "vue";
 export default {
   props: {
+    /**
+     * Biến xác định trạng thái dialog.
+     * CreatedBy: dbhuan (27/04/2021)
+     */
     show: Boolean,
+
+    /**
+     * Lời thông báo cần hiển thị.
+     * CreatedBy: dbhuan (27/04/2021)
+     */
     message: String,
   },
   emits: ["onChange"],
   setup(props, { emit }) {
     const { show } = toRefs(props);
 
+    /**
+     * Hàm theo dõi trạng thái hiển thị dialog và ẩn dialog sau 5 giây.
+     * CreatedBy: dbhuan (27/04/2021)
+     */
     watchEffect(() => {
       if (show.value == true) {
         setTimeout(() => {

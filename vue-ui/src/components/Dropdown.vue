@@ -19,6 +19,7 @@ export default {
     /**
      * Nội dung của dropdown content.
      * Kiểu dữ liệu là một mảng string. ['Dropdown item 1', 'Dropdown item 2']
+     * CreatedBy: dbhuan (27/04/2021)
      */
     content: {
       type: Array,
@@ -28,6 +29,7 @@ export default {
      * Vị trí hiển thị dropdown content. 
      * Hỗ trợ: left, right
      * Mặc định là left.
+     * CreatedBy: dbhuan (27/04/2021)
      */
     dropdownPosition: {
         type: String,
@@ -37,6 +39,10 @@ export default {
   setup() {
     const show = ref(false);
 
+    /**
+     * Hàm set trạng thái của dropdown.
+     * CreatedBy: dbhuan (27/04/2021)
+     */
     const toggleDropdown = () => {
       show.value = !show.value;
     };

@@ -16,6 +16,7 @@ export default {
   props: {
     /**
      * Xác định loại button. Chỉ có icon hoặc có chữ.
+     * CreatedBy: dbhuan (27/04/2021)
      */
     onlyIcon: {
       type: Boolean,
@@ -24,6 +25,7 @@ export default {
 
     /**
      * style cho button.
+     * CreatedBy: dbhuan (27/04/2021)
      */
     styleBtn: {
       type: String,
@@ -32,6 +34,7 @@ export default {
 
     /**
      * Style cho icon của button icon.
+     * CreatedBy: dbhuan (27/04/2021)
      */
     styleIcon: {
       type: String,
@@ -40,11 +43,13 @@ export default {
 
     /**
      * Button text.
+     * CreatedBy: dbhuan (27/04/2021)
      */
 
     /**
      * Text của button.
      * Mặc định là "".
+     * CreatedBy: dbhuan (27/04/2021)
      */
     text: {
       type: String,
@@ -54,6 +59,7 @@ export default {
     /**
      * Icon left của button. Lấy giá trị theo fontawesome5.
      * Mặc định là "".
+     * CreatedBy: dbhuan (27/04/2021)
      */
     iconLeft: {
       type: String,
@@ -64,6 +70,7 @@ export default {
      * Màu nền của button.
      * Hỗ trợ primary, secondary và null.
      * Mặc định là primary
+     * CreatedBy: dbhuan (27/04/2021)
      */
     color: {
       type: String,
@@ -72,6 +79,7 @@ export default {
 
     /**
      * Button icon
+     * CreatedBy: dbhuan (27/04/2021)
      */
     icon: {
       type: String,
