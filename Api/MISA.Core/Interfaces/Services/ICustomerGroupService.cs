@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MISA.Core.Interfaces.Services
 {
-    public interface ICustomerGroupService
+    public interface ICustomerGroupService: IBaseService<CustomerGroup>
     {
         /// <summary>
         /// Lấy tất cả danh sách nhóm khách hàng.

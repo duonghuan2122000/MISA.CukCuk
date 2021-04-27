@@ -59,7 +59,7 @@ namespace MISA.CukCuk.Api.Controllers
         {
             try
             {
-                var customer = _customerService.GetCustomer(customerId);
+                var customer = _customerService.Get(customerId);
 
                 if (customer != null)
                 {
@@ -141,7 +141,7 @@ namespace MISA.CukCuk.Api.Controllers
         /// <response code="204">Xóa thất bại.</response>
         /// <response code="400">Có lỗi từ phía client.</response>
         /// <response code="500">Có lỗi từ phía server.</response>
-        [HttpDelete]
+        [HttpDelete("{customerId}")]
         public IActionResult Delete([FromRoute] Guid customerId)
         {
             try

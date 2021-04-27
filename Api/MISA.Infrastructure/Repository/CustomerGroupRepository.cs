@@ -8,15 +8,10 @@ using System.Data;
 
 namespace MISA.Infrastructure.Repository
 {
-    public class CustomerGroupRepository : ICustomerGroupRepository
+    public class CustomerGroupRepository : BaseRepository<CustomerGroup>, ICustomerGroupRepository
     {
-        private IConfiguration _configuration;
-        private string _connectionString;
-
-        public CustomerGroupRepository(IConfiguration configuration)
+        public CustomerGroupRepository(IConfiguration configuration) : base(configuration)
         {
-            _configuration = configuration;
-            _connectionString = _configuration.GetConnectionString("database");
         }
 
         /// <summary>

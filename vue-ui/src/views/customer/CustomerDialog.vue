@@ -1,10 +1,10 @@
 <template>
   <div class="dialog" :class="{ hide: !show }">
-    <div class="dialog-background" @click="closeDialog"></div>
+    <div class="dialog-background" @click="$emit('onChange', false)"></div>
     <div class="dialog-content">
       <div class="dialog-header">
         <div class="dialog-header-title">THÔNG TIN KHÁCH HÀNG</div>
-        <div class="dialog-close-button" @click="closeDialog">
+        <div class="dialog-close-button" @click="$emit('onChange', false)">
           <i class="fas fa-times"></i>
         </div>
       </div>
@@ -36,7 +36,7 @@
           style="margin-left: 8px"
           text="Hủy"
           :color="null"
-          @click="closeDialog"
+          @click="$emit('onChange', false)"
         />
       </div>
     </div>
@@ -56,13 +56,7 @@ export default {
       type: Boolean,
     },
   },
-  setup(_, { emit }) {
-    const closeDialog = () => {
-      emit("onClose");
-    };
-
-    return { closeDialog };
-  },
+  emits: ['onChange'],
 };
 </script>
 

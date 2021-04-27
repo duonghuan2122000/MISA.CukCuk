@@ -5,11 +5,11 @@ using System.Collections.Generic;
 
 namespace MISA.Core.Service
 {
-    public class CustomerGroupService : ICustomerGroupService
+    public class CustomerGroupService : BaseService<CustomerGroup>, ICustomerGroupService
     {
         ICustomerGroupRepository _customerGroupRepository;
 
-        public CustomerGroupService(ICustomerGroupRepository customerGroupRepository)
+        public CustomerGroupService(ICustomerGroupRepository customerGroupRepository) : base(customerGroupRepository)
         {
             _customerGroupRepository = customerGroupRepository;
         }

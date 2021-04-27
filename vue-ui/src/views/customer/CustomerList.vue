@@ -9,7 +9,7 @@
         <Button
           text="Thêm khách hàng"
           iconLeft="user-plus"
-          @click="showCustomerDialog"
+          @click="setStateCustomerDialog(true)"
         />
       </div>
 
@@ -40,6 +40,7 @@
             :color="null"
             :onlyIcon="true"
             icon="trash"
+            @click="onClickDeleteCustomer"
           />
         </div>
       </div>
@@ -65,8 +66,12 @@
               <tr
                 v-for="c in customers"
                 :key="c.customerId"
-                :class="{ selected: selectedCustomerId == c.customerId }"
-                @click="onSelectCustomer(c.customerId)"
+                :class="{
+                  selected:
+                    selectedCustomerDel &&
+                    selectedCustomerDel.customerId == c.customerId,
+                }"
+                @click="onSelectCustomer(c)"
               >
                 <td>{{ c.customerCode }}</td>
                 <td>{{ c.fullName }}</td>
@@ -93,19 +98,25 @@
     </div>
     <CustomerDialog
       :show="isShowCustomerDialog"
-      @onClose="closeCustomerDialog"
+      @onChange="setStateCustomerDialog"
     />
     <ConfirmDialog
       :show="isShowConfirmDialog"
-      message="Bạn có chắc muốn xóa khách hàng này không?"
-      @onClose="closeConfirmDialog"
+      :message="msgConfirmDialog"
+      @onChange="setStateConfirmDialog"
+      @onOk="delCustomer"
+    />
+    <AlertDialog
+      :show="isShowAlertDialog"
+      :message="msgAlertDialog"
+      @onChange="setStateAlertDialog"
     />
   </div>
 </template>
 
 <script>
 import { ref, computed, onMounted, watch } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 import Button from "../../components/Button.vue";
 import Input from "../../components/Input.vue";
@@ -114,6 +125,7 @@ import Table from "../../components/Table.vue";
 import Pagination from "../../components/Pagination.vue";
 import ConfirmDialog from "../../components/ConfirmDialog.vue";
 import CustomerDialog from "./CustomerDialog.vue";
+import AlertDialog from "../../components/AlertDialog.vue";
 
 import StateEnum from "../../store/StateEnum";
 
@@ -128,6 +140,7 @@ export default {
     Pagination,
     ConfirmDialog,
     CustomerDialog,
+    AlertDialog,
   },
   setup() {
     const state = ref(StateEnum.LOADING);
@@ -182,12 +195,14 @@ export default {
      */
     const customerFilter = ref("");
 
-    const selectedCustomerId = ref(null);
+    const selectedCustomerDel = ref(null);
 
     /**
      * Route
      */
     const route = useRoute();
+
+    const router = useRouter();
 
     /**
      * Trạng thái trang web.
@@ -208,10 +223,7 @@ export default {
      * Hàm refresh dữ liệu.
      */
     const refreshData = () => {
-      page.value = 1;
-      selectedCustomerGroupId.value = "";
-      customerFilter.value = "";
-      fetchCustomers();
+      router.push({ query: { page: 1 } });
     };
 
     /**
@@ -268,37 +280,64 @@ export default {
     const isShowCustomerDialog = ref(false);
 
     /**
-     * Hàm hiển thị dialog khách hàng.
+     * Hàm set trạng thái dialog khách hàng.
      * CreatedBy: dbhuan (20/04/2021)
      */
-    const showCustomerDialog = () => {
-      isShowCustomerDialog.value = true;
+    const setStateCustomerDialog = (state) => {
+      isShowCustomerDialog.value = state;
     };
 
-    /**
-     * Hàm ẩn dialog khách hàng.
-     * CreatedBy: dbhuan (20/04/2021)
-     */
-    const closeCustomerDialog = () => {
-      isShowCustomerDialog.value = false;
-    };
-
+    const msgConfirmDialog = ref("");
     const isShowConfirmDialog = ref(false);
 
-    const showConfirmDialog = () => {
-      isShowConfirmDialog.value = true;
+    const setStateConfirmDialog = (state) => {
+      isShowConfirmDialog.value = state;
     };
 
-    const closeConfirmDialog = () => {
-      isShowConfirmDialog.value = false;
+    const msgAlertDialog = ref("");
+    const isShowAlertDialog = ref(false);
+
+    const setStateAlertDialog = (state) => {
+      isShowAlertDialog.value = state;
     };
 
-    const onSelectCustomer = (customerId) => {
-      if (customerId != selectedCustomerId.value) {
-        selectedCustomerId.value = customerId;
+    const onSelectCustomer = (customer) => {
+      if (
+        !selectedCustomerDel.value ||
+        customer.customerId != selectedCustomerDel.value.customerId
+      ) {
+        selectedCustomerDel.value = customer;
       } else {
-        selectedCustomerId.value = null;
+        selectedCustomerDel.value = null;
       }
+    };
+
+    const onClickDeleteCustomer = () => {
+      if (selectedCustomerDel.value == null) {
+        msgAlertDialog.value =
+          "Bạn phải chọn khách hàng cần xóa trước khi chọn nút xóa.";
+        setStateAlertDialog(true);
+        return;
+      }
+      msgConfirmDialog.value = `Bạn có chắc muốn xóa khách hàng [${selectedCustomerDel.value.customerCode}] này khỏi hệ thống không ?`;
+      setStateConfirmDialog(true);
+    };
+
+    const delCustomer = () => {
+      setStateConfirmDialog(false);
+      msgConfirmDialog.value = "";
+      axios
+        .delete(`/api/v1/customers/${selectedCustomerDel.value.customerId}`)
+        .then((res) => res.data)
+        .then(() => {
+          fetchCustomers();
+          msgAlertDialog.value = "Xóa thành công.";
+          setStateAlertDialog(true);
+        })
+        .catch(() => {
+          msgAlertDialog.value = "Xóa thất bại.";
+          setStateAlertDialog(true);
+        });
     };
 
     /**
@@ -328,7 +367,6 @@ export default {
       clearTimeout(timeOut);
 
       timeOut = setTimeout(() => {
-        console.log("huan");
         initialData();
         fetchCustomers();
       }, 1000);
@@ -341,7 +379,7 @@ export default {
       isLoading,
       isSuccess,
       refreshData,
-      selectedCustomerId,
+      selectedCustomerDel,
       page,
       pageSize,
       startRecord,
@@ -349,12 +387,16 @@ export default {
       selectedCustomerGroupId,
       customerFilter,
       isShowCustomerDialog,
-      showCustomerDialog,
-      closeCustomerDialog,
+      setStateCustomerDialog,
       isShowConfirmDialog,
-      showConfirmDialog,
-      closeConfirmDialog,
+      msgConfirmDialog,
+      setStateConfirmDialog,
+      isShowAlertDialog,
+      msgAlertDialog,
+      setStateAlertDialog,
       onSelectCustomer,
+      onClickDeleteCustomer,
+      delCustomer,
       formatDate,
       customerGroupOptions,
     };

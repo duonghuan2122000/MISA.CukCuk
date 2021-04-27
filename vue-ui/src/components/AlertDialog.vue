@@ -1,9 +1,8 @@
 <template>
   <div class="dialog" :class="{ hide: !show }">
-    <div class="dialog-background" @click="$emit('onChange', false)"></div>
     <div class="dialog-content">
       <div class="dialog-header">
-        <div class="dialog-header-title">XÁC NHẬN</div>
+        <div class="dialog-header-title">THÔNG BÁO</div>
         <div class="dialog-close-button" @click="$emit('onChange', false)">
           <i class="fas fa-times"></i>
         </div>
@@ -11,46 +10,37 @@
       <div class="dialog-body">
         {{ message }}
       </div>
-
-      <div class="dialog-footer">
-        <Button text="Ok" @click="$emit('onOk', false)" />
-        <Button
-          style="margin-left: 8px"
-          text="Hủy"
-          :color="null"
-          @click="$emit('onChange', false)"
-        />
-      </div>
     </div>
   </div>
 </template>
 
 <script>
-import Button from "./Button.vue";
+import { toRefs, watchEffect } from "vue";
 export default {
-  components: {
-    Button,
-  },
   props: {
-    show: {
-      type: Boolean,
-    },
+    show: Boolean,
     message: String,
   },
-  emits: ["onChange", "onOk"],
+  emits: ["onChange"],
+  setup(props, { emit }) {
+    const { show } = toRefs(props);
+
+    watchEffect(() => {
+      if (show.value == true) {
+        setTimeout(() => {
+          emit("onChange", false);
+        }, 5000);
+      }
+    });
+  },
 };
 </script>
 
 <style scoped>
 .dialog {
   position: fixed;
-  top: 0;
+  bottom: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 .dialog .dialog-background {
   position: absolute;
@@ -62,14 +52,15 @@ export default {
 
 .dialog .dialog-content {
   z-index: 40;
-  width: 640px;
-  max-height: calc(100% - 40px);
-  margin: 20px auto;
+  width: 300px;
   background-color: #fff;
   position: relative;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+  margin-left: 20px;
 }
 
 .dialog .dialog-header {
@@ -103,15 +94,7 @@ export default {
   overflow: auto;
   padding-left: 24px;
   padding-right: 24px;
-}
-
-.dialog .dialog-footer {
-  height: 56px;
-  flex-shrink: 0;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding-right: 24px;
+  padding-bottom: 16px;
 }
 
 .dialog.hide {

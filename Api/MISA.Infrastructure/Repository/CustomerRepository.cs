@@ -12,17 +12,15 @@ namespace MISA.Infrastructure.Repository
     /// Repository của khách hàng.
     /// </summary>
     /// CreatedBy: dbhuan (20/04/2021)
-    public class CustomerRepository : ICustomerRepository
+    public class CustomerRepository : BaseRepository<Customer>, ICustomerRepository
     {
-        private IConfiguration _configuration;
-        private string _connectionString;
+        /* private IConfiguration _configuration;
+         private string _connectionString;*/
 
-        public CustomerRepository(IConfiguration configuration)
+        public CustomerRepository(IConfiguration configuration) : base(configuration)
         {
-            _configuration = configuration;
-            _connectionString = _configuration.GetConnectionString("database");
-        }
 
+        }
         /// <summary>
         /// Kiểm tra sự tồn tại của mã khách hàng trong cơ sở dữ liệu.
         /// </summary>
@@ -40,38 +38,6 @@ namespace MISA.Infrastructure.Repository
             var isCustomerCodeExist = connection.QueryFirstOrDefault<bool>("Proc_H_CheckCustomerCodeExists", new { customerCode, customerId }, commandType: CommandType.StoredProcedure);
 
             return isCustomerCodeExist;
-        }
-
-        /// <summary>
-        /// Xóa một khách hàng.
-        /// </summary>
-        /// <param name="customerId">Id một khách hàng.</param>
-        /// <returns>Số khách hàng bị xóa.</returns>
-        /// CreatedBy: dbhuan(20/04/2021)
-        public int Delete(Guid customerId)
-        {
-            // Thiết lập kết nối cơ sở dữ liệu.
-            var connection = new MySqlConnection(_connectionString);
-
-            var rowsAffect = connection.Execute("Proc_DeleteCustomer", new { CustomerId = customerId }, commandType: CommandType.StoredProcedure);
-
-            return rowsAffect;
-        }
-
-        /// <summary>
-        /// Lấy thông tin một khách hàng theo id.
-        /// </summary>
-        /// <param name="customerId">Id khách hàng.</param>
-        /// <returns>Thông tin một khách hàng.</returns>
-        /// CreatedBy: dbhuan(20/04/2021)
-        public Customer GetCustomer(Guid customerId)
-        {
-            // Thiết lập kết nối cơ sở dữ liệu.
-            var connection = new MySqlConnection(_connectionString);
-
-            // Lấy thông tin khách hàng.
-            var customer = connection.QueryFirstOrDefault<Customer>("Proc_H_GetCustomerById", new { customerId }, commandType: CommandType.StoredProcedure);
-            return customer;
         }
 
         /// <summary>
@@ -102,38 +68,6 @@ namespace MISA.Infrastructure.Repository
                 pageSize = customerFilter.pageSize
             };
             return paging;
-        }
-
-        /// <summary>
-        /// Thêm mới một khách hàng.
-        /// </summary>
-        /// <param name="customer">Thông tin một khách hàng.</param>
-        /// <returns>Số khách hàng thêm thành công.</returns>
-        /// CreatedBy: dbhuan(20/04/2021)
-        public int Insert(Customer customer)
-        {
-            // Thiết lập kết nối cơ sở dữ liệu.
-            var connection = new MySqlConnection(_connectionString);
-
-            var rowsAffect = connection.Execute("Proc_InsertCustomer", customer, commandType: CommandType.StoredProcedure);
-
-            return rowsAffect;
-        }
-
-        /// <summary>
-        /// Cập nhật một khách hàng.
-        /// </summary>
-        /// <param name="customer">Thông tin một khách hàng.</param>
-        /// <returns>Số khách hàng cập nhật thành công.</returns>
-        /// CreatedBy: dbhuan(20/04/2021)
-        public int Update(Customer customer)
-        {
-            // Thiết lập kết nối cơ sở dữ liệu.
-            var connection = new MySqlConnection(_connectionString);
-
-            var rowsAffect = connection.Execute("Proc_UpdateCustomer", customer, commandType: CommandType.StoredProcedure);
-
-            return rowsAffect;
         }
     }
 }
