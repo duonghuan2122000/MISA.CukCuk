@@ -33,5 +33,26 @@ namespace MISA.Core.Service
         {
             return _customerRepository.GetCustomers(customerFilter);
         }
+
+        protected override void Validate(Customer t, bool isInsert)
+        {
+            if(isInsert == false)
+            {
+                CustomerException.CheckCustomerIdEmpty(t.CustomerId);
+            }
+            CustomerException.CheckCustomerCodeEmpty(t.CustomerCode);
+            bool isExists;
+            if(isInsert == true)
+            {
+                isExists = _customerRepository.CheckCustomerCodeExist(t.CustomerCode);
+            } else
+            {
+                isExists = _customerRepository.CheckCustomerCodeExist(t.CustomerCode, t.CustomerId);
+            }
+            if (isExists == true)
+            {
+                throw new CustomerException("Mã khách hàng đã tồn tại trên hệ thống.");
+            }
+        }
     }
 }

@@ -21,7 +21,7 @@
             v-model="customerFilter"
           />
           <Combobox
-            style="margin-left: 8px"
+            style="margin-left: 8px; width: 150px"
             :options="customerGroupOptions"
             v-model="selectedCustomerGroupId"
           />
@@ -98,6 +98,7 @@
     </div>
     <CustomerDialog
       :show="isShowCustomerDialog"
+      :customerGroupOptions="customerGroupOptions.slice(1)"
       @onChange="setStateCustomerDialog"
     />
     <ConfirmDialog
@@ -105,6 +106,7 @@
       :message="msgConfirmDialog"
       @onChange="setStateConfirmDialog"
       @onOk="delCustomer"
+      @onCancel="cancelDelCustomer"
     />
     <AlertDialog
       :show="isShowAlertDialog"
@@ -277,7 +279,7 @@ export default {
      * Biến xác định trạng thái dialog khách hàng.
      * CreatedBy: dbhuan (20/04/2021)
      */
-    const isShowCustomerDialog = ref(false);
+    const isShowCustomerDialog = ref(true);
 
     /**
      * Hàm set trạng thái dialog khách hàng.
@@ -337,7 +339,14 @@ export default {
         .catch(() => {
           msgAlertDialog.value = "Xóa thất bại.";
           setStateAlertDialog(true);
-        });
+        })
+        .finally(() => cancelDelCustomer());
+    };
+
+    const cancelDelCustomer = () => {
+      setStateConfirmDialog(false);
+      msgConfirmDialog.value = "";
+      selectedCustomerDel.value = null;
     };
 
     /**
@@ -397,6 +406,7 @@ export default {
       onSelectCustomer,
       onClickDeleteCustomer,
       delCustomer,
+      cancelDelCustomer,
       formatDate,
       customerGroupOptions,
     };

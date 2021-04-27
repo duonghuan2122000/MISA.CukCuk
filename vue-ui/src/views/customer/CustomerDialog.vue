@@ -10,21 +10,112 @@
       </div>
       <div class="dialog-body">
         <div class="row">
-          <div class="col-3"></div>
-          <div class="col-9">
+          <div class="col-4"></div>
+
+          <div class="col-8">
             <div class="row">
               <div class="col-6">
                 <div class="field">
-                  <label>Mã khách hàng (<span style="color: red">*</span>)</label>
+                  <label
+                    >Mã khách hàng (<span style="color: red">*</span>)</label
+                  >
                   <Input />
                 </div>
               </div>
+
               <div class="col-6">
                 <div class="field">
                   <label>Họ và tên (<span style="color: red">*</span>)</label>
                   <Input />
                 </div>
               </div>
+
+              <div class="col-6">
+                <div class="field">
+                  <label>Mã thẻ thành viên</label>
+                  <Input />
+                </div>
+              </div>
+
+              <div class="col-6">
+                <div class="field">
+                  <label>Nhóm khách hàng</label>
+                  <Combobox
+                    :options="customerGroupOptions"
+                  />
+                </div>
+              </div>
+
+              <div class="col-6">
+                <div class="field">
+                  <label>Ngày sinh</label>
+                  <Input inputType="date" />
+                </div>
+              </div>
+
+              <div class="col-6">
+                <div class="field">
+                  <label>Giới tính</label>
+                  <div class="flex-horizontal">
+                    <div>
+                      <Radio
+                        name="gender"
+                        value="0"
+                      />
+                      <label>Nữ</label>
+                    </div>
+                    <div>
+                      <Radio
+                        name="gender"
+                        value="1"
+                      />
+                      <label>Nam</label>
+                    </div>
+                    <div>
+                      <Radio
+                        name="gender"
+                        value="2"
+                      />
+                      <label>Khác</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-8">
+            <div class="field">
+              <label>Email</label>
+              <Input />
+            </div>
+          </div>
+
+          <div class="col-4">
+            <div class="field">
+              <label>Số điện thoại (<span style="color: red">*</span>)</label>
+              <Input />
+            </div>
+          </div>
+
+          <div class="col-8">
+            <div class="field">
+              <label>Tên công ty</label>
+              <Input />
+            </div>
+          </div>
+
+          <div class="col-4">
+            <div class="field">
+              <label>Mã số thuế</label>
+              <Input />
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="field">
+              <label>Địa chỉ</label>
+              <Input />
             </div>
           </div>
         </div>
@@ -46,17 +137,36 @@
 <script>
 import Button from "../../components/Button.vue";
 import Input from "../../components/Input.vue";
+import Combobox from "../../components/Combobox.vue";
+import Radio from "../../components/Radio.vue";
 export default {
   components: {
     Button,
-    Input
+    Input,
+    Combobox,
+    Radio,
   },
   props: {
-    show: {
-      type: Boolean,
-    },
+    show: Boolean,
+    customerGroupOptions: Array,
+    // customer: {
+    //   type: Object,
+    //   default: {
+    //     customerCode: null,
+    //     fullName: null,
+    //     gender: null,
+    //     memberCardCode: null,
+    //     customerGroupId: null,
+    //     phoneNumber: null,
+    //     dateOfBirth: null,
+    //     companyName: null,
+    //     companyTaxCode: null,
+    //     email: null,
+    //     address: null,
+    //   },
+    // },
   },
-  emits: ['onChange'],
+  emits: ["onChange"],
 };
 </script>
 
@@ -145,6 +255,13 @@ export default {
 .field > label {
   display: inline-block;
   margin-bottom: 4px;
+}
+
+.field .flex-horizontal {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 40px;
 }
 
 /* Grid layout */

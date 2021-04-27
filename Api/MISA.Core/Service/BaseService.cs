@@ -30,12 +30,19 @@ namespace MISA.Core.Service
 
         public int Insert(T t)
         {
+            Validate(t);
             return _baseRepository.Insert(t);
         }
 
         public int Update(T t)
         {
+            Validate(t, false);
             return _baseRepository.Update(t);
+        }
+
+        protected virtual void Validate(T t, bool isInsert = true)
+        {
+
         }
     }
 }

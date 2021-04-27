@@ -18,7 +18,7 @@
           style="margin-left: 8px"
           text="Hủy"
           :color="null"
-          @click="$emit('onChange', false)"
+          @click="$emit('onCancel')"
         />
       </div>
     </div>
@@ -37,7 +37,7 @@ export default {
     },
     message: String,
   },
-  emits: ["onChange", "onOk"],
+  emits: ["onChange", "onOk", "onCancel"],
 };
 </script>
 
