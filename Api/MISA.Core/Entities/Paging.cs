@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MISA.Core.Entities
 {
@@ -11,12 +13,24 @@ namespace MISA.Core.Entities
         /// <summary>
         /// Tổng số bản ghi
         /// </summary>
-        public int totalRecord { get; set; }
+        public int totalRecord
+        {
+            get
+            {
+                return data.Count();
+            }
+        }
 
         /// <summary>
         /// Tổng số trang
         /// </summary>
-        public int totalPages { get; set; }
+        public int totalPages
+        {
+            get
+            {
+                return (int) Math.Ceiling((decimal) totalRecord / pageSize);
+            }
+        }
 
         /// <summary>
         /// Dữ liệu

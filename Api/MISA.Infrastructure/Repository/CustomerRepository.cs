@@ -5,6 +5,7 @@ using MISA.Core.Interfaces.Repository;
 using MySqlConnector;
 using System;
 using System.Data;
+using System.Linq;
 
 namespace MISA.Infrastructure.Repository
 {
@@ -63,8 +64,6 @@ namespace MISA.Infrastructure.Repository
             // trả dữ liệu.
             var paging = new Paging<Customer>()
             {
-                totalRecord = totalRecord,
-                totalPages = (int)totalPages,
                 data = customers,
                 page = customerFilter.page,
                 pageSize = customerFilter.pageSize
