@@ -228,6 +228,7 @@ export default {
      * Hàm refresh dữ liệu.
      */
     const refreshData = () => {
+      selectedCustomerGroupId.value = "";
       router.push({ query: { page: 1 } });
     };
 
