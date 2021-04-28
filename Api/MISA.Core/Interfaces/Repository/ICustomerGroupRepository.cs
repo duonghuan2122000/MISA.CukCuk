@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace MISA.Core.Interfaces.Repository
 {
+    /// <summary>
+    /// Interface repository của nhóm khách hàng.
+    /// </summary>
+    /// CreatedBy: dbhuan (28/04/2021)
     public interface ICustomerGroupRepository: IBaseRepository<CustomerGroup>
     {
         /// <summary>

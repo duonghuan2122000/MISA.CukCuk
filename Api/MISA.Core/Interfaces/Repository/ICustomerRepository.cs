@@ -3,6 +3,10 @@ using System;
 
 namespace MISA.Core.Interfaces.Repository
 {
+    /// <summary>
+    /// Interface repository của khách hàng.
+    /// </summary>
+    /// CreatedBy: dbhuan (28/04/2021)
     public interface ICustomerRepository: IBaseRepository<Customer>
     {
         /// <summary>

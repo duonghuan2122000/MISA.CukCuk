@@ -10,6 +10,7 @@ namespace MISA.CukCuk.Api.Middleware
     /// <summary>
     /// Middleware của endpoint khách hàng.
     /// </summary>
+    /// CreatedBy: dbhuan (28/04/2021)
     public class ErrorHandlingMiddleware
     {
         private readonly RequestDelegate _next;
@@ -37,6 +38,7 @@ namespace MISA.CukCuk.Api.Middleware
         /// <param name="context">context hiên tại.</param>
         /// <param name="exception">Ngoại lệ</param>
         /// <returns></returns>
+        /// CreatedBy: dbhuan (28/04/2021)
         private static Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             HttpStatusCode status = HttpStatusCode.InternalServerError;

@@ -5,6 +5,7 @@ namespace MISA.Core.Exceptions
     /// <summary>
     /// Class ngoại lệ của khách hàng.
     /// </summary>
+    /// CreatedBy: dbhuan (28/04/2021)
     public class CustomerException : Exception
     {
         public CustomerException(string msg) : base(msg)
@@ -20,11 +21,6 @@ namespace MISA.Core.Exceptions
         {
             if (string.IsNullOrEmpty(customerCode))
             {
-                /*var response = new
-                {
-                    devMsg = "Mã khách hàng không được để trống",
-                    MISACode = "001"
-                };*/
                 throw new CustomerException("Mã khách hàng không được để trống.");
             }
         }

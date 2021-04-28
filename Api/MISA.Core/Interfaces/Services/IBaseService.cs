@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace MISA.Core.Interfaces.Services
 {
+    /// <summary>
+    /// Interface base service chung
+    /// </summary>
+    /// <typeparam name="T">Một thực thể.</typeparam>
+    /// CreatedBy: dbhuan (27/04/2021)
     public interface IBaseService<T> where T: class
     {
         /// <summary>

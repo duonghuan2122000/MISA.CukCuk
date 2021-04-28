@@ -34,21 +34,37 @@ namespace MISA.Core.Service
             return _customerRepository.GetCustomers(customerFilter);
         }
 
+        /// <summary>
+        /// Phương thức valid dữ liệu.
+        /// </summary>
+        /// <param name="t">Thông tin thực thể cần valid dữ liệu.</param>
+        /// <param name="isInsert">Tham số xác định trạng thái insert hoặc update.</param>
         protected override void Validate(Customer t, bool isInsert)
         {
             if(isInsert == false)
             {
+                // Nếu là update dữ liệu
+
+                // kiểm tra sự tồn tại của trường id khách hàng.
                 CustomerException.CheckCustomerIdEmpty(t.CustomerId);
             }
+
+            // kiểm tra sự tồn tại của trường mã khách hàng.
             CustomerException.CheckCustomerCodeEmpty(t.CustomerCode);
+
+            // Biến xác định mã khách hàng đã tồn tại trên hệ thống chưa.
             bool isExists;
             if(isInsert == true)
             {
+                // nếu là insert dữ liệu.
                 isExists = _customerRepository.CheckCustomerCodeExist(t.CustomerCode);
             } else
             {
+                // nếu là update dữ liệu.
                 isExists = _customerRepository.CheckCustomerCodeExist(t.CustomerCode, t.CustomerId);
             }
+
+            // nếu đã tồn tại mã khách hàng thì ném ra ngoại lệ CustomerException.
             if (isExists == true)
             {
                 throw new CustomerException("Mã khách hàng đã tồn tại trên hệ thống.");

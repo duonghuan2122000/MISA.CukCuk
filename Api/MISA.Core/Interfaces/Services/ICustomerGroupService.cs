@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace MISA.Core.Interfaces.Services
 {
+    /// <summary>
+    /// Interface service của nhóm khách hàng.
+    /// </summary>
+    /// CreatedBy: dbhuan (28/04/2021)
     public interface ICustomerGroupService: IBaseService<CustomerGroup>
     {
         /// <summary>

@@ -28,22 +28,15 @@ namespace MISA.CukCuk.Api.Controllers
         [HttpGet]
         public IActionResult GetCustomers([FromQuery] CustomerFilter customerFilter)
         {
-            try
-            {
-                var paging = _customerService.GetCustomers(customerFilter);
+            var paging = _customerService.GetCustomers(customerFilter);
 
-                // Xử lý kết quả trả về cho client.
-                if (paging.data.Any())
-                {
-                    return Ok(paging);
-                }
-
-                return NoContent();
-            }
-            catch (Exception)
+            // Xử lý kết quả trả về cho client.
+            if (paging.data.Any())
             {
-                throw;
+                return Ok(paging);
             }
+
+            return NoContent();
         }
 
         /// <summary>
@@ -57,21 +50,13 @@ namespace MISA.CukCuk.Api.Controllers
         [HttpGet("{customerId}")]
         public IActionResult GetCustomer([FromRoute] Guid customerId)
         {
-            try
-            {
-                var customer = _customerService.Get(customerId);
+            var customer = _customerService.Get(customerId);
 
-                if (customer != null)
-                {
-                    return Ok(customer);
-                }
-                return NoContent();
-            }
-            catch (Exception)
+            if (customer != null)
             {
-
-                throw;
+                return Ok(customer);
             }
+            return NoContent();
         }
 
         /// <summary>
@@ -87,20 +72,12 @@ namespace MISA.CukCuk.Api.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] Customer customer)
         {
-            try
+            var res = _customerService.Insert(customer);
+            if (res > 0)
             {
-                var res = _customerService.Insert(customer);
-                if (res > 0)
-                {
-                    return StatusCode(201, res);
-                }
-                return NoContent();
+                return StatusCode(201, res);
             }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            return NoContent();
         }
 
         /// <summary>
@@ -116,20 +93,12 @@ namespace MISA.CukCuk.Api.Controllers
         [HttpPut]
         public IActionResult Put([FromBody] Customer customer)
         {
-            try
+            var res = _customerService.Update(customer);
+            if (res > 0)
             {
-                var res = _customerService.Update(customer);
-                if (res > 0)
-                {
-                    return StatusCode(201, res);
-                }
-                return NoContent();
+                return StatusCode(201, res);
             }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            return NoContent();
         }
 
         /// <summary>
@@ -144,20 +113,12 @@ namespace MISA.CukCuk.Api.Controllers
         [HttpDelete("{customerId}")]
         public IActionResult Delete([FromRoute] Guid customerId)
         {
-            try
+            var res = _customerService.Delete(customerId);
+            if (res > 0)
             {
-                var res = _customerService.Delete(customerId);
-                if (res > 0)
-                {
-                    return StatusCode(201, res);
-                }
-                return NoContent();
+                return StatusCode(201, res);
             }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            return NoContent();
         }
     }
 }
