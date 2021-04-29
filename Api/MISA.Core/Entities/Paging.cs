@@ -13,13 +13,7 @@ namespace MISA.Core.Entities
         /// <summary>
         /// Tổng số bản ghi
         /// </summary>
-        public int totalRecord
-        {
-            get
-            {
-                return data.Count();
-            }
-        }
+        public int totalRecord { get; set; }
 
         /// <summary>
         /// Tổng số trang
