@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace MISA.CukCuk.Api.Controllers
 {
-    /*[ApiController]
-    public class BaseController<T> : ControllerBase where T: class
+    [ApiController]
+    public class BaseController<T> : ControllerBase where T : class
     {
         IBaseService<T> _baseService;
 
@@ -27,12 +27,12 @@ namespace MISA.CukCuk.Api.Controllers
         /// <response code="204">Không có dữ liệu.</response>
         /// CreatedBy: dbhuan (19/04/2021)
         [HttpGet("{entityId}")]
-        public IActionResult Get([FromRoute] Guid entityId)
+        public virtual IActionResult Get([FromRoute] Guid entityId)
         {
             try
             {
                 var entity = _baseService.Get(entityId);
-                if(entity != null)
+                if (entity != null)
                 {
                     return Ok(entity);
                 }
@@ -56,12 +56,12 @@ namespace MISA.CukCuk.Api.Controllers
         /// <response code="500">Có lỗi từ phía server.</response>
         /// CreatedBy: dbhuan (19/04/2021)
         [HttpPost]
-        public IActionResult Post([FromBody] T t)
+        public virtual IActionResult Post([FromBody] T t)
         {
             try
             {
                 var res = _baseService.Insert(t);
-                if(res > 0)
+                if (res > 0)
                 {
                     return StatusCode(201, res);
                 }
@@ -85,7 +85,7 @@ namespace MISA.CukCuk.Api.Controllers
         /// <response code="500">Có lỗi từ phía server.</response>
         /// CreatedBy: dbhuan (19/04/2021)
         [HttpPut]
-        public IActionResult Put([FromBody] T t)
+        public virtual IActionResult Put([FromBody] T t)
         {
             try
             {
@@ -113,12 +113,12 @@ namespace MISA.CukCuk.Api.Controllers
         /// <response code="400">Có lỗi từ phía client.</response>
         /// <response code="500">Có lỗi từ phía server.</response>
         [HttpDelete("{entityId}")]
-        public IActionResult Delete([FromRoute] Guid entityId)
+        public virtual IActionResult Delete([FromRoute] Guid entityId)
         {
             try
             {
                 var res = _baseService.Delete(entityId);
-                if(res > 0)
+                if (res > 0)
                 {
                     return Ok(res);
                 }
@@ -130,5 +130,5 @@ namespace MISA.CukCuk.Api.Controllers
                 throw;
             }
         }
-    }*/
+    }
 }

@@ -255,7 +255,7 @@ export default {
 
     const fetchCustomerGroups = () => {
       axios
-        .get("/api/v1/customergroups")
+        .get("/api/v1/customer-groups")
         .then((res) => res.data)
         .then((data) => {
           let options = [{ value: "", text: "Nhóm khách hàng" }];

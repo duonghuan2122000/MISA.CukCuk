@@ -1,4 +1,6 @@
-﻿using MISA.Core.Interfaces.Repository;
+﻿using MISA.Core.AttributeCustom;
+using MISA.Core.Exceptions;
+using MISA.Core.Interfaces.Repository;
 using MISA.Core.Interfaces.Services;
 using System;
 using System.Collections.Generic;
@@ -62,6 +64,7 @@ namespace MISA.Core.Service
         {
             // Valid dữ liệu.
             Validate(t);
+            CustomValidate(t);
 
             // Tiến hành thêm.
             return _baseRepository.Insert(t);
@@ -76,7 +79,8 @@ namespace MISA.Core.Service
         public int Update(T t)
         {
             // Valid dữ liệu.
-            Validate(t, false);
+            Validate(t);
+            CustomValidate(t, false);
 
             // Tiến hành cập nhật
             return _baseRepository.Update(t);
@@ -86,9 +90,82 @@ namespace MISA.Core.Service
         /// Phương thức valid dữ liệu
         /// </summary>
         /// <param name="t">Thông tin của thực thể.</param>
-        /// <param name="isInsert">Tham số xác định insert hoặc update.</param>
         /// CreatedBy: dbhuan (28/04/2021)
-        protected virtual void Validate(T t, bool isInsert = true)
+        private void Validate(T t)
+        {
+            // lấy ra tất cả các property của class.
+            var properties = typeof(T).GetProperties();
+
+            foreach (var property in properties)
+            {
+                var requiredProperties = property.GetCustomAttributes(typeof(PropertyRequired), true);
+                var maxLengthProperties = property.GetCustomAttributes(typeof(PropertyMaxLength), true);
+
+                // check required.
+                if (requiredProperties.Length > 0)
+                {
+                    // Lấy giá trị.
+                    var propertyValue = property.GetValue(t);
+
+                    // Kiểm tra giá trị.
+                    if (string.IsNullOrEmpty(propertyValue.ToString()))
+                    {
+                        var msgError = (requiredProperties[0] as PropertyRequired).MsgError;
+
+                        if (string.IsNullOrEmpty(msgError))
+                        {
+                            // lấy thông lỗi mặc định.
+                            var msgErrorRequiredDefault = Properties.Resources.MsgErrorRequired;
+                            
+                            var sb = new StringBuilder();
+
+                            // Bind tên hiển thị cho thông báo lỗi. Mặc định là tên thuộc tính của thực thể.
+                            var name = (requiredProperties[0] as PropertyRequired).Name.Length > 0 ? (requiredProperties[0] as PropertyRequired).Name : property.Name;
+                            sb.AppendFormat(msgErrorRequiredDefault, name);
+
+                            msgError = sb.ToString();
+                        }
+                        throw new ClientException(msgError);
+                    }
+                }
+
+                // check maxLength.
+                if(maxLengthProperties.Length > 0)
+                {
+                    // Lấy giá trị.
+                    var propertyValue = property.GetValue(t);
+                    var maxLength = (maxLengthProperties[0] as PropertyMaxLength).MaxLength;
+
+                    // kiểm tra giá trị.
+                    if (propertyValue.ToString().Length > maxLength)
+                    {
+                        var msgError = (maxLengthProperties[0] as PropertyRequired).MsgError;
+                        if (string.IsNullOrEmpty(msgError))
+                        {
+                            // lấy thông lỗi mặc định.
+                            var msgErrorMaxLengthDefault = Properties.Resources.MsgErrorRequired;
+                            
+                            var sb = new StringBuilder();
+
+                            // Bind tên hiển thị cho thông báo lỗi. Mặc định là tên thuộc tính của thực thể.
+                            var name = (maxLengthProperties[0] as PropertyRequired).Name.Length > 0 ? (maxLengthProperties[0] as PropertyRequired).Name : property.Name;
+                            sb.AppendFormat(msgErrorMaxLengthDefault, name);
+
+                            msgError = sb.ToString();
+                        }
+                        throw new ClientException(msgError);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Phương thức dùng để cho valid của các trường hợp riêng biệt.
+        /// </summary>
+        /// <param name="t">Một thực thể</param>
+        /// <param name="isInsert">Xác định insert hoặc update</param>
+        /// CreatedBy: dbhuan (29/04/2021)
+        protected virtual void CustomValidate(T t, bool isInsert = true)
         {
 
         }

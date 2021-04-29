@@ -40,7 +40,7 @@ export default {
 }
 
 .navbar .navbar-item {
-  height: 40px;
+  height: 44px;
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -52,12 +52,12 @@ export default {
 }
 
 .navbar .navbar-item-icon * {
-  font-size: 16px;
+  font-size: 20px;
 }
 
 /* Navbar item active */
 .navbar .navbar-item.active {
-  background-color: green;
+  background-color: #019160;
 }
 
 .navbar .navbar-item.active .navbar-item-icon *,

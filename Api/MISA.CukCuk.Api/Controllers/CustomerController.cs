@@ -8,11 +8,11 @@ namespace MISA.CukCuk.Api.Controllers
 {
     [Route("api/v1/customers")]
     [ApiController]
-    public class CustomerController : ControllerBase
+    public class CustomerController : BaseController<Customer>
     {
         ICustomerService _customerService;
 
-        public CustomerController(ICustomerService customerService)
+        public CustomerController(ICustomerService customerService): base(customerService)
         {
             _customerService = customerService;
         }
@@ -39,7 +39,7 @@ namespace MISA.CukCuk.Api.Controllers
             return NoContent();
         }
 
-        /// <summary>
+        /*/// <summary>
         /// Lấy thông tin một khách hàng theo id.
         /// </summary>
         /// <param name="customerId">id của khách hàng cần lấy thông tin.</param>
@@ -119,6 +119,6 @@ namespace MISA.CukCuk.Api.Controllers
                 return StatusCode(201, res);
             }
             return NoContent();
-        }
+        }*/
     }
 }

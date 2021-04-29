@@ -1,6 +1,10 @@
 <template>
   <div @click="$emit('click')">
-    <button v-if="!onlyIcon" class="button" :class="color ? 'is-' + color : ''">
+    <button
+      v-if="!onlyIcon"
+      class="button"
+      :class="[color ? 'is-' + color : '', { 'has-icon': iconLeft }]"
+    >
       <span v-if="iconLeft" class="icon fas" :class="'fa-' + iconLeft"></span>
       <span>{{ text }}</span>
     </button>
@@ -100,20 +104,24 @@ div {
   outline: none;
   background-color: transparent;
   border: 1px solid #ccc;
-  padding-left: 16px;
-  padding-right: 16px;
+  padding-left: 24px;
+  padding-right: 24px;
   cursor: pointer;
   border-radius: 4px;
 }
 
-/* Button icon */
-.button .icon {
+.button.has-icon {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.button.has-icon .icon {
   margin-right: 8px;
 }
 
 /* Button color primary */
 .button.is-primary {
-  background-color: green;
+  background-color: #019160;
   color: #fff;
 }
 
@@ -123,6 +131,6 @@ div {
 
 /* Button hover */
 .button.is-primary:hover {
-  background-color: rgb(0, 100, 0);
+  background-color: #2fbe8e;
 }
 </style>

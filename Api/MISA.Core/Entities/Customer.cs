@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MISA.Core.AttributeCustom;
+using System;
 
 namespace MISA.Core.Entities
 {
@@ -16,11 +17,14 @@ namespace MISA.Core.Entities
         /// <summary>
         /// Mã khách hàng.
         /// </summary>
+        [PropertyRequired(Name = "Mã khách hàng")]
+        [PropertyMaxLength(20, Name = "Mã khách hàng")]
         public string CustomerCode { get; set; }
 
         /// <summary>
         /// Họ tên khách hàng.
         /// </summary>
+        [PropertyRequired(Name = "Tên khách hàng")]
         public string FullName { get; set; }
 
         /// <summary>

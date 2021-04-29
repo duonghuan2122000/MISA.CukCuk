@@ -1,16 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MISA.Core.Entities;
 using MISA.Core.Interfaces.Services;
+using System;
 using System.Linq;
 
 namespace MISA.CukCuk.Api.Controllers
 {
-    [Route("api/v1/customergroups")]
+    [Route("api/v1/customer-groups")]
     [ApiController]
-    public class CustomerGroupController : ControllerBase
+    public class CustomerGroupController : BaseController<CustomerGroup>
     {
         ICustomerGroupService _customerGroupService;
 
-        public CustomerGroupController(ICustomerGroupService customerGroupService)
+        public CustomerGroupController(ICustomerGroupService customerGroupService): base(customerGroupService)
         {
             _customerGroupService = customerGroupService;
         }
@@ -34,5 +36,40 @@ namespace MISA.CukCuk.Api.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Private
+        /// </summary>
+        [NonAction]
+        public override IActionResult Get([FromRoute] Guid entityId)
+        {
+            return base.Get(entityId);
+        }
+
+        /// <summary>
+        /// Private
+        /// </summary>
+        [NonAction]
+        public override IActionResult Post([FromBody] CustomerGroup t)
+        {
+            return base.Post(t);
+        }
+
+        /// <summary>
+        /// private
+        /// </summary>
+        [NonAction]
+        public override IActionResult Put([FromBody] CustomerGroup t)
+        {
+            return base.Put(t);
+        }
+
+        /// <summary>
+        /// private
+        /// </summary>
+        [NonAction]
+        public override IActionResult Delete([FromRoute] Guid entityId)
+        {
+            return base.Delete(entityId);
+        }
     }
 }

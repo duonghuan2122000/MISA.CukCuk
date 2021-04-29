@@ -1,12 +1,10 @@
-﻿using MISA.Core.Entities;
+﻿using MISA.Core.AttributeCustom;
+using MISA.Core.Entities;
 using MISA.Core.Exceptions;
 using MISA.Core.Interfaces.Repository;
 using MISA.Core.Interfaces.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MISA.Core.Service
 {
@@ -18,7 +16,7 @@ namespace MISA.Core.Service
     {
         ICustomerRepository _customerRepository;
 
-        public CustomerService(ICustomerRepository customerRepository): base(customerRepository)
+        public CustomerService(ICustomerRepository customerRepository) : base(customerRepository)
         {
             _customerRepository = customerRepository;
         }
@@ -39,26 +37,32 @@ namespace MISA.Core.Service
         /// </summary>
         /// <param name="t">Thông tin thực thể cần valid dữ liệu.</param>
         /// <param name="isInsert">Tham số xác định trạng thái insert hoặc update.</param>
-        protected override void Validate(Customer t, bool isInsert)
+        protected override void CustomValidate(Customer t, bool isInsert)
         {
-            if(isInsert == false)
+            if (isInsert == false)
             {
                 // Nếu là update dữ liệu
 
                 // kiểm tra sự tồn tại của trường id khách hàng.
-                CustomerException.CheckCustomerIdEmpty(t.CustomerId);
-            }
+                if (string.IsNullOrEmpty(t.CustomerId.ToString()))
+                {
+                    // lấy thông lỗi mặc định.
+                    var msgErrorRequiredDefault = Properties.Resources.MsgErrorRequired;
 
-            // kiểm tra sự tồn tại của trường mã khách hàng.
-            CustomerException.CheckCustomerCodeEmpty(t.CustomerCode);
+                    var sb = new StringBuilder();
+                    sb.AppendFormat(msgErrorRequiredDefault, "Id khách hàng");
+                    throw new ClientException(sb.ToString());
+                }
+            }
 
             // Biến xác định mã khách hàng đã tồn tại trên hệ thống chưa.
             bool isExists;
-            if(isInsert == true)
+            if (isInsert == true)
             {
                 // nếu là insert dữ liệu.
                 isExists = _customerRepository.CheckCustomerCodeExist(t.CustomerCode);
-            } else
+            }
+            else
             {
                 // nếu là update dữ liệu.
                 isExists = _customerRepository.CheckCustomerCodeExist(t.CustomerCode, t.CustomerId);
@@ -67,7 +71,7 @@ namespace MISA.Core.Service
             // nếu đã tồn tại mã khách hàng thì ném ra ngoại lệ CustomerException.
             if (isExists == true)
             {
-                throw new CustomerException("Mã khách hàng đã tồn tại trên hệ thống.");
+                throw new ClientException("Mã khách hàng đã tồn tại trên hệ thống.");
             }
         }
     }

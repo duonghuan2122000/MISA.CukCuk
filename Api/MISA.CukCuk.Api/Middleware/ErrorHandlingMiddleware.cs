@@ -42,7 +42,7 @@ namespace MISA.CukCuk.Api.Middleware
         private static Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             HttpStatusCode status = HttpStatusCode.InternalServerError;
-            if (exception is CustomerException)
+            if (exception is ClientException)
             {
                 status = HttpStatusCode.BadRequest;
             }

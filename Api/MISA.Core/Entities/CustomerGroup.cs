@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MISA.Core.AttributeCustom;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,7 @@ namespace MISA.Core.Entities
         /// <summary>
         /// Tên nhóm khách hàng.
         /// </summary>
+        [PropertyRequired("Tên nhóm khách hàng không được phép để trống")]
         public string CustomerGroupName { get; set; }
 
         /// <summary>

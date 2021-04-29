@@ -1,6 +1,7 @@
 ﻿using MISA.Core.Entities;
 using MISA.Core.Interfaces.Repository;
 using MISA.Core.Interfaces.Services;
+using System;
 using System.Collections.Generic;
 
 namespace MISA.Core.Service
@@ -33,6 +34,10 @@ namespace MISA.Core.Service
         {
             var customerGroups = _customerGroupRepository.GetCustomerGroups();
             return customerGroups;
+        }
+
+        protected override void CustomValidate(CustomerGroup t, bool isInsert = true)
+        {
         }
     }
 }

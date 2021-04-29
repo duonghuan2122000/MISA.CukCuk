@@ -43,7 +43,7 @@ export default {
 
 <style>
 .header {
-  height: 56px;
+  height: 48px;
   display: flex;
   align-items: center;
   border-bottom: 1px solid #e5e5e5;
