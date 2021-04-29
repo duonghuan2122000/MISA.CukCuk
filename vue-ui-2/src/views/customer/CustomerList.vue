@@ -9,7 +9,7 @@
         <Button
           text="Thêm khách hàng"
           iconLeft="user-plus"
-          @click="setStateCustomerDialog(true)"
+          @click="onClickBtnAddCustomer"
         />
       </div>
 
@@ -18,13 +18,14 @@
           <Input
             placeholder="Nhập mã, họ tên hoặc số điện thoại khách hàng"
             style="width: 300px"
-            :value="customerFilter"
-            @input="filterCustomers"
+            v-model="customerFilter"
+            @input="onChangeInputCustomerFilter"
           />
           <Combobox
             style="margin-left: 8px; width: 150px"
             :options="customerGroupOptions"
             v-model="selectedCustomerGroupId"
+            @input="onChangeComboboxCustomerGroup"
           />
         </div>
         <div class="toolbar-right">
@@ -73,6 +74,7 @@
                     selectedCustomerDel.customerId == c.customerId,
                 }"
                 @click="onSelectCustomer(c)"
+                @dblclick="onDblClickTrCustomer(c.customerId)"
               >
                 <td>{{ c.customerCode }}</td>
                 <td>{{ c.fullName }}</td>
@@ -363,8 +365,11 @@ export default {
     /**
      * Hàm lọc danh sách khách hàng theo giá trị input nhập vào.
      */
-    filterCustomers() {
-      console.log("filter");
+    onChangeInputCustomerFilter() {
+      clearTimeout(this.timeOut);
+      this.timeOut = setTimeout(() => {
+        this.fetchCustomers();
+      }, 1000);
     },
 
     /**
@@ -392,6 +397,23 @@ export default {
     },
 
     /**
+     * Hàm click button thêm khách hàng.
+     * CreatedBy: dbhuan (29/04/2021)
+     */
+    onClickBtnAddCustomer() {
+      this.customerModify = null;
+      this.setStateCustomerDialog(true);
+    },
+
+    /**
+     * Hàm được gọi khi combobox nhóm khách hàng thay đổi.
+     * CreatedBy: dbhuan (29/04/2021)
+     */
+    onChangeComboboxCustomerGroup() {
+      this.fetchCustomers();
+    },
+
+    /**
      * Hàm click chọn một khách hàng trên bảng.
      * CreatedBy: dbhuan (29/04/2021)
      */
@@ -404,6 +426,22 @@ export default {
       } else {
         this.selectedCustomerDel = null;
       }
+    },
+
+    /**
+     * Hàm dblclick vào tr table.
+     * CreatedBy: dbhuan (29/04/2021)
+     */
+    onDblClickTrCustomer(customerId) {
+      // call api lấy thông tin khách hàng.
+      axios
+        .get(`/api/v1/customers/${customerId}`)
+        .then((res) => res.data)
+        .then((data) => {
+          this.customerModify = data;
+          this.setStateCustomerDialog(true);
+        })
+        .catch();
     },
 
     /**
@@ -475,6 +513,9 @@ export default {
      * CreatedBy: dbhuan (29/04/2021)
      */
     formatDate: function (dateStr) {
+      if (!dateStr) {
+        return "Không rõ";
+      }
       return dayjs(dateStr).format("DD/MM/YYYY");
     },
   },
@@ -488,7 +529,8 @@ export default {
   left: 226px;
   right: 0;
   bottom: 0;
-  padding: 16px;
+  padding-left: 16px;
+  padding-right: 16px;
   display: flex;
   flex-direction: column;
 }
@@ -540,7 +582,7 @@ export default {
 /* Loader */
 .loader {
   border: 2px solid #f3f3f3; /* Light grey */
-  border-top: 2px solid green; /* Blue */
+  border-top: 2px solid #019160; /* Blue */
   border-radius: 50%;
   width: 30px;
   height: 30px;

@@ -2,13 +2,17 @@
   <input
     type="radio"
     :name="name"
-    :value="value"
-    @change="$emit('input', $event.target.value)"
+    :value="value.toString()"
+    :checked="checkValue == value"
+    @change="$emit('input', parseInt($event.target.value))"
   />
 </template>
 
 <script>
 export default {
+  model: {
+    prop: "checkValue",
+  },
   props: {
     /**
      * Tên của radio.
@@ -20,7 +24,16 @@ export default {
      * Giá trị của radio.
      * CreatedBy: dbhuan (27/04/2021)
      */
-    value: String,
+    value: Number,
+
+    /**
+     * Giá trị hiện tại của radio.
+     * CreatedBy: dbhuan (29/04/2021)
+     */
+    checkValue: {
+      type: Number,
+      default: null,
+    },
   },
 };
 </script>

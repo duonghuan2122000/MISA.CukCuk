@@ -20,8 +20,8 @@
                     >Mã khách hàng (<span style="color: red">*</span>)</label
                   >
                   <Input
-                    :modelValue="customer && customer.customerCode"
-                    @update:modelValue="
+                    :value="customer && customer.customerCode"
+                    @input="
                       $emit('update:customer', {
                         ...customer,
                         customerCode: $event,
@@ -35,8 +35,8 @@
                 <div class="field">
                   <label>Họ và tên (<span style="color: red">*</span>)</label>
                   <Input
-                    :modelValue="customer && customer.fullName"
-                    @update:modelValue="
+                    :value="customer && customer.fullName"
+                    @input="
                       $emit('update:customer', {
                         ...customer,
                         fullName: $event,
@@ -50,8 +50,8 @@
                 <div class="field">
                   <label>Mã thẻ thành viên</label>
                   <Input
-                    :modelValue="customer && customer.memberCardCode"
-                    @update:modelValue="
+                    :value="customer && customer.memberCardCode"
+                    @input="
                       $emit('update:customer', {
                         ...customer,
                         memberCardCode: $event,
@@ -66,8 +66,8 @@
                   <label>Nhóm khách hàng</label>
                   <Combobox
                     :options="customerGroupOptions"
-                    :modelValue="customer && customer.customerGroupId"
-                    @update:modelValue="
+                    :value="customer && customer.customerGroupId"
+                    @input="
                       $emit('update:customer', {
                         ...customer,
                         customerGroupId: $event,
@@ -82,8 +82,8 @@
                   <label>Ngày sinh</label>
                   <Input
                     inputType="date"
-                    :modelValue="customer && customer.dateOfBirth"
-                    @update:modelValue="
+                    :value="customer && customer.dateOfBirth"
+                    @input="
                       $emit('update:customer', {
                         ...customer,
                         dateOfBirth: $event,
@@ -100,9 +100,9 @@
                     <div>
                       <Radio
                         name="gender"
-                        value="0"
-                        :modelValue="customer && customer.gender"
-                        @update:modelValue="
+                        :value="0"
+                        :checkValue="customer && customer.gender"
+                        @input="
                           $emit('update:customer', {
                             ...customer,
                             gender: $event,
@@ -114,9 +114,9 @@
                     <div>
                       <Radio
                         name="gender"
-                        value="1"
-                        :modelValue="customer && customer.gender"
-                        @update:modelValue="
+                        :value="1"
+                        :checkValue="customer && customer.gender"
+                        @input="
                           $emit('update:customer', {
                             ...customer,
                             gender: $event,
@@ -128,9 +128,9 @@
                     <div>
                       <Radio
                         name="gender"
-                        value="2"
-                        :modelValue="customer && customer.gender"
-                        @update:modelValue="
+                        :value="2"
+                        :checkValue="customer && customer.gender"
+                        @input="
                           $emit('update:customer', {
                             ...customer,
                             gender: $event,
@@ -149,8 +149,8 @@
             <div class="field">
               <label>Email</label>
               <Input
-                :modelValue="customer && customer.email"
-                @update:modelValue="
+                :value="customer && customer.email"
+                @input="
                   $emit('update:customer', { ...customer, email: $event })
                 "
               />
@@ -161,8 +161,8 @@
             <div class="field">
               <label>Số điện thoại (<span style="color: red">*</span>)</label>
               <Input
-                :modelValue="customer && customer.phoneNumber"
-                @update:modelValue="
+                :value="customer && customer.phoneNumber"
+                @input="
                   $emit('update:customer', { ...customer, phoneNumber: $event })
                 "
               />
@@ -173,8 +173,8 @@
             <div class="field">
               <label>Tên công ty</label>
               <Input
-                :modelValue="customer && customer.companyName"
-                @update:modelValue="
+                :value="customer && customer.companyName"
+                @input="
                   $emit('update:customer', { ...customer, companyName: $event })
                 "
               />
@@ -185,8 +185,8 @@
             <div class="field">
               <label>Mã số thuế</label>
               <Input
-                :modelValue="customer && customer.companyTaxCode"
-                @update:modelValue="
+                :value="customer && customer.companyTaxCode"
+                @input="
                   $emit('update:customer', {
                     ...customer,
                     companyTaxCode: $event,
@@ -200,8 +200,8 @@
             <div class="field">
               <label>Địa chỉ</label>
               <Input
-                :modelValue="customer && customer.address"
-                @update:modelValue="
+                :value="customer && customer.address"
+                @input="
                   $emit('update:customer', { ...customer, address: $event })
                 "
               />

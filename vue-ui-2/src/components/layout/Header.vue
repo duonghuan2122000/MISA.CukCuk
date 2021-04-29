@@ -11,18 +11,18 @@
         :content="['Nhà hàng biển đông', 'Nhà hàng biển đông chi nhánh Hà Nội']"
       >
         <div style="margin-left: 16px">Nhà hàng biển đông</div>
-        <div class="fas fa-chevron-down" style="margin-left: 8px"></div>
+        <div class="fas fa-chevron-down" style="margin-left: 10px"></div>
       </Dropdown>
 
       <div class="header-toolbar-right">
-        <div class="fas fa-bell" style="margin-right: 8px"></div>
+        <div class="fas fa-bell" style="margin-right: 16px; font-size: 16px"></div>
         <div>Dương Bằng Huân</div>
         <Dropdown
-          style="margin-left: 8px"
+          style="margin-left: 16px"
           :content="['Thông tin cá nhân', 'Đăng xuất']"
           dropdownPosition="right"
         >
-          <i class="fas fa-ellipsis-h"></i>
+          <i style="font-size: 16px" class="fas fa-ellipsis-h"></i>
         </Dropdown>
       </div>
     </div>
@@ -52,17 +52,19 @@ export default {
   width: 226px;
   display: flex;
   align-items: center;
-  border-right: 1px solid #e5e5e5;
 }
 
 .header .logo-box .toggle {
+  height: 24px;
+  width: 24px;
   margin-left: 16px;
   font-size: 24px;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .header .logo-box .logo {
-  margin-left: 16px;
+  margin-left: 10px;
   font-size: 24px;
 }
 

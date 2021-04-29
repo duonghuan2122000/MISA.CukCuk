@@ -17,7 +17,7 @@
 
 .table tr {
   text-align: left;
-  height: 40px;
+  height: 48px;
   border-bottom: 1px solid #e5e5e5;
 }
 
@@ -32,5 +32,20 @@
 .table tbody tr:hover,
 .table tbody tr.selected {
   background-color: #e5e5e5;
+}
+
+.table th,
+.table td {
+  padding-left: 10px;
+}
+
+.table th:first-child,
+.table td:first-child {
+  padding-left: 16px;
+}
+
+.table th:last-child,
+.table td:last-child {
+  padding-right: 16px;
 }
 </style>

@@ -76,9 +76,9 @@ export default {
 
 .pagination .pagination-item {
   display: inline-block;
-  height: 40px;
-  line-height: 40px;
-  width: 40px;
+  height: 30px;
+  line-height: 30px;
+  width: 30px;
   border-radius: 50%;
   border: 1px solid #ccc;
   text-align: center;
@@ -89,7 +89,7 @@ export default {
 }
 
 .pagination .pagination-item.active {
-  background-color: green;
+  background-color: #019160;
   color: #fff;
 }
 

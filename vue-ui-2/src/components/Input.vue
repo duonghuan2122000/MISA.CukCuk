@@ -52,6 +52,6 @@ export default {
 }
 
 .input:focus {
-  border-color: green;
+  border-color: #019160;
 }
 </style>

@@ -9,7 +9,7 @@
       <span>{{ text }}</span>
     </button>
 
-    <button v-else class="button" :style="styleBtn">
+    <button v-else class="button only-icon" :style="styleBtn">
       <span :style="styleIcon" class="fas" :class="'fa-' + icon"></span>
     </button>
   </div>
@@ -131,5 +131,11 @@ div {
 /* Button hover */
 .button.is-primary:hover {
   background-color: #2fbe8e;
+}
+
+/* Button only icon */
+.button.only-icon {
+  padding-left: 16px;
+  padding-right: 16px;
 }
 </style>

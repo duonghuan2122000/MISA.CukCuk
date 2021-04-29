@@ -48,11 +48,16 @@ export default {
 
 .navbar .navbar-item-icon {
   margin-left: 16px;
-  margin-right: 16px;
+  margin-right: 10px;
+  flex-shrink: 0;
+  height: 20px;
+  width: 20px;
 }
 
 .navbar .navbar-item-icon * {
-  font-size: 20px;
+  font-size: 16px;
+  height: 20px;
+  width: 20px;
 }
 
 /* Navbar item active */
@@ -72,7 +77,7 @@ export default {
 
 /* Navbar toggle */
 .navbar.navbar-toggle {
-  width: 56px;
+  width: 52px;
 }
 
 .navbar.navbar-toggle .navbar-item-text {
@@ -80,7 +85,7 @@ export default {
 }
 
 .navbar.navbar-toggle + div .content {
-  left: 56px;
+  left: 52px;
   transition: .6s linear;
 }
 </style>
