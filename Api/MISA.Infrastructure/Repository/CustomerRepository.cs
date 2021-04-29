@@ -55,13 +55,15 @@ namespace MISA.Infrastructure.Repository
             // Tính tổng số khách hàng có điều kiện.
             var totalRecord = connection.QueryFirstOrDefault<int>("Proc_GetTotalCustomers", customerFilter, commandType: CommandType.StoredProcedure);
 
+            // Tính tổng số trang.
+            var totalPages = Math.Ceiling((decimal)totalRecord / customerFilter.pageSize);
+
             // Lấy danh sách khách hàng có phân trang.
             var customers = connection.Query<Customer>("Proc_GetCustomers", customerFilter, commandType: CommandType.StoredProcedure);
 
             // trả dữ liệu.
             var paging = new Paging<Customer>()
             {
-                totalRecord = totalRecord,
                 data = customers,
                 page = customerFilter.page,
                 pageSize = customerFilter.pageSize
