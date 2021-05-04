@@ -117,13 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="MsgErrorFilter" xml:space="preserve">
-    <value>Dữ liệu sai định dạng</value>
+  <data name="Female" xml:space="preserve">
+    <value>Nữ</value>
   </data>
-  <data name="MsgErrorMaxLength" xml:space="preserve">
-    <value>{0} không được dài quá {1} ký tự</value>
+  <data name="Male" xml:space="preserve">
+    <value>Nam</value>
   </data>
-  <data name="MsgErrorRequired" xml:space="preserve">
-    <value>{0} không được phép để trống</value>
+  <data name="Other" xml:space="preserve">
+    <value>Khác</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Không xác định</value>
   </data>
 </root>

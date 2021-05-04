@@ -1,5 +1,7 @@
 ﻿using MISA.Core.AttributeCustom;
+using MISA.Core.Enum;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace MISA.Core.Entities
 {
@@ -17,20 +19,20 @@ namespace MISA.Core.Entities
         /// <summary>
         /// Mã khách hàng.
         /// </summary>
-        [PropertyRequired(name: "Mã khách hàng")]
-        [PropertyMaxLength(20, name: "Mã khách hàng")]
+        [PropertyRequired(ErrorResourceType = typeof(Properties.CustomerResource), ErrorResourceName = "CustomerCode")]
+        [PropertyMaxLength(MaxLength = 20, Name = "Mã khách hàng")]
         public string CustomerCode { get; set; }
 
         /// <summary>
         /// Họ tên khách hàng.
         /// </summary>
-        [PropertyRequired(name: "Tên khách hàng")]
+        [PropertyRequired(Name = "Tên khách hàng")]
         public string FullName { get; set; }
 
         /// <summary>
         /// Giới tính khách hàng theo kiểu int.
         /// </summary>
-        public int? Gender { get; set; }
+        public GenderEnum? Gender { get; set; }
 
         /// <summary>
         /// Mã thẻ thành viên.
@@ -50,7 +52,7 @@ namespace MISA.Core.Entities
         /// <summary>
         /// Số điện thoại.
         /// </summary>
-        [PropertyRequired(name: "Số điện thoại")]
+        [PropertyRequired(Name = "Số điện thoại")]
         public string PhoneNumber { get; set; }
 
         /// <summary>
@@ -110,22 +112,13 @@ namespace MISA.Core.Entities
         {
             get
             {
-                if (Gender == 0)
+                return Gender switch
                 {
-                    return "Nữ";
-                }
-                else if (Gender == 1)
-                {
-                    return "Nam";
-                }
-                else if (Gender == 2)
-                {
-                    return "Khác";
-                }
-                else
-                {
-                    return "Không xác định";
-                }
+                    GenderEnum.FEMALE => Properties.GenderResource.Female,
+                    GenderEnum.MALE => Properties.GenderResource.Male,
+                    GenderEnum.OTHER => Properties.GenderResource.Other,
+                    _ => Properties.GenderResource.Unknown,
+                };
             }
         }
     }

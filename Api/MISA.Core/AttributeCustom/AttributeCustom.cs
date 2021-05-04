@@ -21,12 +21,11 @@ namespace MISA.Core.AttributeCustom
         /// <summary>
         /// Tên sẽ được thay thế vào thông báo lỗi mặc định.
         /// </summary>
-        public string Name = String.Empty;
-        public PropertyRequired(string msgError = "", string name = "")
-        {
-            Name = name;
-            MsgError = msgError;
-        }
+        public string Name = string.Empty;
+
+        public Type? ErrorResourceType { get; set; }
+
+        public string ErrorResourceName { get; set; }
     }
 
     /// <summary>
@@ -49,12 +48,5 @@ namespace MISA.Core.AttributeCustom
         /// Tên sẽ được thay thế vào thông báo lỗi mặc định.
         /// </summary>
         public string Name = string.Empty;
-
-        public PropertyMaxLength(int maxLength, string msgError = "", string name = "")
-        {
-            MaxLength = maxLength;
-            MsgError = msgError;
-            Name = name;
-        }
     }
 }

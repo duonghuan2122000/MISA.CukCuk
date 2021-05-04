@@ -22,14 +22,14 @@ namespace MISA.Core.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Resources {
+    public class GenderResource {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources() {
+        internal GenderResource() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace MISA.Core.Properties {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MISA.Core.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MISA.Core.Properties.GenderResource", typeof(GenderResource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,29 +61,38 @@ namespace MISA.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dữ liệu sai định dạng.
+        ///   Looks up a localized string similar to Nữ.
         /// </summary>
-        public static string MsgErrorFilter {
+        public static string Female {
             get {
-                return ResourceManager.GetString("MsgErrorFilter", resourceCulture);
+                return ResourceManager.GetString("Female", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} không được dài quá {1} ký tự.
+        ///   Looks up a localized string similar to Nam.
         /// </summary>
-        public static string MsgErrorMaxLength {
+        public static string Male {
             get {
-                return ResourceManager.GetString("MsgErrorMaxLength", resourceCulture);
+                return ResourceManager.GetString("Male", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} không được phép để trống.
+        ///   Looks up a localized string similar to Khác.
         /// </summary>
-        public static string MsgErrorRequired {
+        public static string Other {
             get {
-                return ResourceManager.GetString("MsgErrorRequired", resourceCulture);
+                return ResourceManager.GetString("Other", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Không xác định.
+        /// </summary>
+        public static string Unknown {
+            get {
+                return ResourceManager.GetString("Unknown", resourceCulture);
             }
         }
     }

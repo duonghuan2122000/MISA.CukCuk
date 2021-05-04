@@ -107,8 +107,10 @@ namespace MISA.Core.Service
                     // Lấy giá trị.
                     var propertyValue = property.GetValue(t);
 
+               
+
                     // Kiểm tra giá trị.
-                    if (string.IsNullOrEmpty(propertyValue.ToString()))
+                    if (propertyValue == null || string.IsNullOrEmpty(propertyValue.ToString()))
                     {
                         var msgError = (requiredProperties[0] as PropertyRequired).MsgError;
 
@@ -118,7 +120,8 @@ namespace MISA.Core.Service
                             var msgErrorRequiredDefault = Properties.Resources.MsgErrorRequired;
 
                             // Bind tên hiển thị cho thông báo lỗi. Mặc định là tên thuộc tính của thực thể.
-                            var name = (requiredProperties[0] as PropertyRequired).Name.Length > 0 ? (requiredProperties[0] as PropertyRequired).Name : property.Name;
+                            /*var name = (requiredProperties[0] as PropertyRequired).Name.Length > 0 ? (requiredProperties[0] as PropertyRequired).Name : property.Name;*/
+
 
                             msgError = string.Format(msgErrorRequiredDefault, name);
                         }

@@ -21,7 +21,7 @@ namespace MISA.Core.Entities
         /// <summary>
         /// Tên nhóm khách hàng.
         /// </summary>
-        [PropertyRequired("Tên nhóm khách hàng không được phép để trống")]
+        [PropertyRequired(Name = "Tên nhóm khách hàng")]
         public string CustomerGroupName { get; set; }
 
         /// <summary>

@@ -29,7 +29,16 @@ namespace MISA.Core.Service
         /// CreatedBy: dbhuan(20/04/2021)
         public Paging<Customer> GetCustomers(CustomerFilter customerFilter)
         {
+            FilterValidate(customerFilter);
             return _customerRepository.GetCustomers(customerFilter);
+        }
+
+        private void FilterValidate(CustomerFilter customerFilter)
+        {
+            if (customerFilter.page <= 0 || customerFilter.pageSize <= 0)
+            {
+                throw new ClientException(Properties.Resources.MsgErrorFilter);
+            }
         }
 
         /// <summary>
