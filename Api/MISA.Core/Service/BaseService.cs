@@ -5,6 +5,7 @@ using MISA.Core.Interfaces.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -121,7 +122,7 @@ namespace MISA.Core.Service
 
                             // Bind tên hiển thị cho thông báo lỗi. Mặc định là tên thuộc tính của thực thể.
                             /*var name = (requiredProperties[0] as PropertyRequired).Name.Length > 0 ? (requiredProperties[0] as PropertyRequired).Name : property.Name;*/
-
+                            var name = new ResourceManager((requiredProperties[0] as PropertyRequired).ErrorResourceType).GetString((requiredProperties[0] as PropertyRequired).ErrorResourceName);
 
                             msgError = string.Format(msgErrorRequiredDefault, name);
                         }
