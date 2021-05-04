@@ -21,7 +21,7 @@ namespace MISA.Core.Entities
         /// <summary>
         /// Tên nhóm khách hàng.
         /// </summary>
-        [PropertyRequired(Name = "Tên nhóm khách hàng")]
+        [PropertyRequired(ErrorResourceType = typeof(Properties.CustomerGroupResource))]
         public string CustomerGroupName { get; set; }
 
         /// <summary>

@@ -37,7 +37,7 @@ namespace MISA.Core.Service
         {
             if (customerFilter.page <= 0 || customerFilter.pageSize <= 0)
             {
-                throw new ClientException(Properties.Resources.MsgErrorFilter);
+                throw new ClientException(Properties.ValidResource.MsgErrorFilter);
             }
         }
 
@@ -49,6 +49,10 @@ namespace MISA.Core.Service
         protected override void CustomValidate(Customer t, bool isInsert)
         {
             // check customerCode đúng định dạng chưa.
+            if (!t.CustomerCode.StartsWith("KH"))
+            {
+                throw new ClientException(Properties.CustomerResource.MsgErrorRegCustomerCode);
+            }
 
             if (isInsert == false)
             {
@@ -58,11 +62,9 @@ namespace MISA.Core.Service
                 if (string.IsNullOrEmpty(t.CustomerId.ToString()))
                 {
                     // lấy thông lỗi mặc định.
-                    var msgErrorRequiredDefault = Properties.Resources.MsgErrorRequired;
+                    var msgErrorRequiredDefault = Properties.ValidResource.MsgErrorRequired;
 
-                    var sb = new StringBuilder();
-                    sb.AppendFormat(msgErrorRequiredDefault, "Id khách hàng");
-                    throw new ClientException(sb.ToString());
+                    throw new ClientException(string.Format(msgErrorRequiredDefault, Properties.CustomerResource.CustomerId));
                 }
             }
 
@@ -82,7 +84,7 @@ namespace MISA.Core.Service
             // nếu đã tồn tại mã khách hàng thì ném ra ngoại lệ CustomerException.
             if (isExists == true)
             {
-                throw new ClientException("Mã khách hàng đã tồn tại trên hệ thống.");
+                throw new ClientException(Properties.CustomerResource.MsgErrorCustomerCodeExists);
             }
         }
     }

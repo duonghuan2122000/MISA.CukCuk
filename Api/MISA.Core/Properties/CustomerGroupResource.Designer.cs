@@ -22,14 +22,14 @@ namespace MISA.Core.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Resources {
+    public class CustomerGroupResource {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources() {
+        internal CustomerGroupResource() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace MISA.Core.Properties {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MISA.Core.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MISA.Core.Properties.CustomerGroupResource", typeof(CustomerGroupResource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,29 +61,11 @@ namespace MISA.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dữ liệu sai định dạng.
+        ///   Looks up a localized string similar to Tên nhóm khách hàng.
         /// </summary>
-        public static string MsgErrorFilter {
+        public static string CustomerGroupName {
             get {
-                return ResourceManager.GetString("MsgErrorFilter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0} không được dài quá {1} ký tự.
-        /// </summary>
-        public static string MsgErrorMaxLength {
-            get {
-                return ResourceManager.GetString("MsgErrorMaxLength", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0} không được phép để trống.
-        /// </summary>
-        public static string MsgErrorRequired {
-            get {
-                return ResourceManager.GetString("MsgErrorRequired", resourceCulture);
+                return ResourceManager.GetString("CustomerGroupName", resourceCulture);
             }
         }
     }

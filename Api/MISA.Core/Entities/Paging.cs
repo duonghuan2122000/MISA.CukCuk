@@ -29,7 +29,7 @@ namespace MISA.Core.Entities
         /// <summary>
         /// Dữ liệu
         /// </summary>
-        public IEnumerable<T>? data { get; set; }
+        public IEnumerable<T> data { get; set; }
 
         /// <summary>
         /// Trang hiện tại.

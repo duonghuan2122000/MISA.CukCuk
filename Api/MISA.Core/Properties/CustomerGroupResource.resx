@@ -117,22 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CustomerCode" xml:space="preserve">
-    <value>Mã khách hàng</value>
-  </data>
-  <data name="CustomerId" xml:space="preserve">
-    <value>Id khách hàng</value>
-  </data>
-  <data name="FullName" xml:space="preserve">
-    <value>Họ và tên</value>
-  </data>
-  <data name="MsgErrorCustomerCodeExists" xml:space="preserve">
-    <value>Mã khách hàng đã tồn tại trên hệ thống</value>
-  </data>
-  <data name="MsgErrorRegCustomerCode" xml:space="preserve">
-    <value>Mã khách hàng sai định dạng</value>
-  </data>
-  <data name="PhoneNumber" xml:space="preserve">
-    <value>Số điện thoại</value>
+  <data name="CustomerGroupName" xml:space="preserve">
+    <value>Tên nhóm khách hàng</value>
   </data>
 </root>

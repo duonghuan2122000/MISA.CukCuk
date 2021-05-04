@@ -22,14 +22,14 @@ namespace MISA.Core.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class CustomerResource {
+    public class ValidResource {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal CustomerResource() {
+        internal ValidResource() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace MISA.Core.Properties {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MISA.Core.Properties.CustomerResource", typeof(CustomerResource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MISA.Core.Properties.ValidResource", typeof(ValidResource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,56 +61,29 @@ namespace MISA.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mã khách hàng.
+        ///   Looks up a localized string similar to Dữ liệu sai định dạng.
         /// </summary>
-        public static string CustomerCode {
+        public static string MsgErrorFilter {
             get {
-                return ResourceManager.GetString("CustomerCode", resourceCulture);
+                return ResourceManager.GetString("MsgErrorFilter", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Id khách hàng.
+        ///   Looks up a localized string similar to {0} không được dài quá {1} ký tự.
         /// </summary>
-        public static string CustomerId {
+        public static string MsgErrorMaxLength {
             get {
-                return ResourceManager.GetString("CustomerId", resourceCulture);
+                return ResourceManager.GetString("MsgErrorMaxLength", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Họ và tên.
+        ///   Looks up a localized string similar to {0} không được phép để trống.
         /// </summary>
-        public static string FullName {
+        public static string MsgErrorRequired {
             get {
-                return ResourceManager.GetString("FullName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Mã khách hàng đã tồn tại trên hệ thống.
-        /// </summary>
-        public static string MsgErrorCustomerCodeExists {
-            get {
-                return ResourceManager.GetString("MsgErrorCustomerCodeExists", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Mã khách hàng sai định dạng.
-        /// </summary>
-        public static string MsgErrorRegCustomerCode {
-            get {
-                return ResourceManager.GetString("MsgErrorRegCustomerCode", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Số điện thoại.
-        /// </summary>
-        public static string PhoneNumber {
-            get {
-                return ResourceManager.GetString("PhoneNumber", resourceCulture);
+                return ResourceManager.GetString("MsgErrorRequired", resourceCulture);
             }
         }
     }

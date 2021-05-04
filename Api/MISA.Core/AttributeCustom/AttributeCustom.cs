@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MISA.Core.AttributeCustom
 {
@@ -11,7 +7,7 @@ namespace MISA.Core.AttributeCustom
     /// </summary>
     /// CreatedBy: dbhuan (29/04/2021)
     [AttributeUsage(AttributeTargets.Property)]
-    public class PropertyRequired: Attribute
+    public class PropertyRequired : Attribute
     {
         /// <summary>
         /// Thông báo lỗi tùy chỉnh.
@@ -19,12 +15,13 @@ namespace MISA.Core.AttributeCustom
         public string MsgError = string.Empty;
 
         /// <summary>
-        /// Tên sẽ được thay thế vào thông báo lỗi mặc định.
+        /// Nguồn resource.
         /// </summary>
-        public string Name = string.Empty;
-
         public Type? ErrorResourceType { get; set; }
 
+        /// <summary>
+        /// Tên key trong resource.
+        /// </summary>
         public string ErrorResourceName { get; set; }
     }
 
@@ -33,7 +30,7 @@ namespace MISA.Core.AttributeCustom
     /// </summary>
     /// CreatedBy: dbhuan (29/04/2021)
     [AttributeUsage(AttributeTargets.Property)]
-    public class PropertyMaxLength: Attribute
+    public class PropertyMaxLength : Attribute
     {
         /// <summary>
         /// Độ dài tối đa cho phép.
@@ -44,9 +41,15 @@ namespace MISA.Core.AttributeCustom
         /// Thông báo lỗi tùy chỉnh.
         /// </summary>
         public string MsgError = string.Empty;
+
         /// <summary>
-        /// Tên sẽ được thay thế vào thông báo lỗi mặc định.
+        /// Nguồn resource.
         /// </summary>
-        public string Name = string.Empty;
+        public Type? ErrorResourceType { get; set; }
+
+        /// <summary>
+        /// Tên key trong resource.
+        /// </summary>
+        public string ErrorResourceName { get; set; }
     }
 }

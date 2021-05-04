@@ -1,7 +1,6 @@
 ﻿using MISA.Core.AttributeCustom;
 using MISA.Core.Enum;
 using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace MISA.Core.Entities
 {
@@ -19,14 +18,14 @@ namespace MISA.Core.Entities
         /// <summary>
         /// Mã khách hàng.
         /// </summary>
-        [PropertyRequired(ErrorResourceType = typeof(Properties.CustomerResource), ErrorResourceName = "CustomerCode")]
-        [PropertyMaxLength(MaxLength = 20, Name = "Mã khách hàng")]
+        [PropertyRequired(ErrorResourceType = typeof(Properties.CustomerResource))]
+        [PropertyMaxLength(MaxLength = 20, ErrorResourceType = typeof(Properties.CustomerResource))]
         public string CustomerCode { get; set; }
 
         /// <summary>
         /// Họ tên khách hàng.
         /// </summary>
-        [PropertyRequired(Name = "Tên khách hàng")]
+        [PropertyRequired(ErrorResourceType = typeof(Properties.CustomerResource))]
         public string FullName { get; set; }
 
         /// <summary>
@@ -52,7 +51,7 @@ namespace MISA.Core.Entities
         /// <summary>
         /// Số điện thoại.
         /// </summary>
-        [PropertyRequired(Name = "Số điện thoại")]
+        [PropertyRequired(ErrorResourceType = typeof(Properties.CustomerResource))]
         public string PhoneNumber { get; set; }
 
         /// <summary>

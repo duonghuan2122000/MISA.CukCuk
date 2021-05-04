@@ -4,10 +4,7 @@ using MISA.Core.Interfaces.Repository;
 using MISA.Core.Interfaces.Services;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Resources;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MISA.Core.Service
 {
@@ -108,21 +105,21 @@ namespace MISA.Core.Service
                     // Lấy giá trị.
                     var propertyValue = property.GetValue(t);
 
-               
-
                     // Kiểm tra giá trị.
                     if (propertyValue == null || string.IsNullOrEmpty(propertyValue.ToString()))
                     {
-                        var msgError = (requiredProperties[0] as PropertyRequired).MsgError;
+                        var requiredProperty = requiredProperties[0] as PropertyRequired;
+                        var msgError = requiredProperty.MsgError;
 
                         if (string.IsNullOrEmpty(msgError))
                         {
                             // lấy thông lỗi mặc định.
-                            var msgErrorRequiredDefault = Properties.Resources.MsgErrorRequired;
+                            var msgErrorRequiredDefault = Properties.ValidResource.MsgErrorRequired;
 
                             // Bind tên hiển thị cho thông báo lỗi. Mặc định là tên thuộc tính của thực thể.
-                            /*var name = (requiredProperties[0] as PropertyRequired).Name.Length > 0 ? (requiredProperties[0] as PropertyRequired).Name : property.Name;*/
-                            var name = new ResourceManager((requiredProperties[0] as PropertyRequired).ErrorResourceType).GetString((requiredProperties[0] as PropertyRequired).ErrorResourceName);
+                            var keyResource = !string.IsNullOrEmpty(requiredProperty.ErrorResourceName) ? requiredProperty.ErrorResourceName : property.Name;
+                            var valueResource = new ResourceManager(requiredProperty.ErrorResourceType).GetString(keyResource);
+                            var name = !string.IsNullOrEmpty(valueResource) ? valueResource : property.Name;
 
                             msgError = string.Format(msgErrorRequiredDefault, name);
                         }
@@ -131,7 +128,7 @@ namespace MISA.Core.Service
                 }
 
                 // check maxLength.
-                if(maxLengthProperties.Length > 0)
+                if (maxLengthProperties.Length > 0)
                 {
                     // Lấy giá trị.
                     var propertyValue = property.GetValue(t);
@@ -140,16 +137,19 @@ namespace MISA.Core.Service
                     // kiểm tra giá trị.
                     if (propertyValue.ToString().Length > maxLength)
                     {
-                        var msgError = (maxLengthProperties[0] as PropertyRequired).MsgError;
+                        var maxLengthProperty = maxLengthProperties[0] as PropertyMaxLength;
+                        var msgError = maxLengthProperty.MsgError;
                         if (string.IsNullOrEmpty(msgError))
                         {
                             // lấy thông lỗi mặc định.
-                            var msgErrorMaxLengthDefault = Properties.Resources.MsgErrorRequired;
+                            var msgErrorMaxLengthDefault = Properties.ValidResource.MsgErrorRequired;
 
                             // Bind tên hiển thị cho thông báo lỗi. Mặc định là tên thuộc tính của thực thể.
-                            var name = (maxLengthProperties[0] as PropertyRequired).Name.Length > 0 ? (maxLengthProperties[0] as PropertyRequired).Name : property.Name;
+                            var keyResource = !string.IsNullOrEmpty(maxLengthProperty.ErrorResourceName) ? maxLengthProperty.ErrorResourceName : property.Name;
+                            var valueResource = new ResourceManager(maxLengthProperty.ErrorResourceType).GetString(keyResource);
+                            var name = !string.IsNullOrEmpty(valueResource) ? valueResource : property.Name;
 
-                            msgError = string.Format(msgErrorMaxLengthDefault, name);
+                            msgError = string.Format(msgErrorMaxLengthDefault, name, maxLength);
                         }
                         throw new ClientException(msgError);
                     }
