@@ -39,6 +39,8 @@ namespace MISA.Core.Service
         /// <param name="isInsert">Tham số xác định trạng thái insert hoặc update.</param>
         protected override void CustomValidate(Customer t, bool isInsert)
         {
+            // check customerCode đúng định dạng chưa.
+
             if (isInsert == false)
             {
                 // Nếu là update dữ liệu

@@ -17,14 +17,14 @@ namespace MISA.Core.Entities
         /// <summary>
         /// Mã khách hàng.
         /// </summary>
-        [PropertyRequired(Name = "Mã khách hàng")]
-        [PropertyMaxLength(20, Name = "Mã khách hàng")]
+        [PropertyRequired(name: "Mã khách hàng")]
+        [PropertyMaxLength(20, name: "Mã khách hàng")]
         public string CustomerCode { get; set; }
 
         /// <summary>
         /// Họ tên khách hàng.
         /// </summary>
-        [PropertyRequired(Name = "Tên khách hàng")]
+        [PropertyRequired(name: "Tên khách hàng")]
         public string FullName { get; set; }
 
         /// <summary>
@@ -50,6 +50,7 @@ namespace MISA.Core.Entities
         /// <summary>
         /// Số điện thoại.
         /// </summary>
+        [PropertyRequired(name: "Số điện thoại")]
         public string PhoneNumber { get; set; }
 
         /// <summary>

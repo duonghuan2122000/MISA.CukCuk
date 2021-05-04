@@ -71,5 +71,16 @@ namespace MISA.CukCuk.Api.Controllers
         {
             return base.Delete(entityId);
         }
+
+        /// <summary>
+        /// private
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <returns></returns>
+        [NonAction]
+        public override IActionResult Delete([FromBody] CustomerId customerId)
+        {
+            return base.Delete(customerId);
+        }
     }
 }

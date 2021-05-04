@@ -54,7 +54,7 @@
 
       <div class="scroll">
         <div v-if="isLoading" class="loading">
-          <div class="loader"></div>
+          <Loader />
         </div>
         <div v-else-if="isSuccess">
           <Table v-if="customers.length > 0">
@@ -112,6 +112,7 @@
       :show="isShowCustomerDialog"
       :customer.sync="customerModify"
       :customerGroupOptions="customerGroupOptions.slice(1)"
+      :state="stateCustomerDialog"
       @onChange="setStateCustomerDialog"
     />
     <ConfirmDialog
@@ -139,6 +140,7 @@ import ConfirmDialog from "../../components/ConfirmDialog.vue";
 import CustomerDialog from "./CustomerDialog.vue";
 import AlertDialog from "../../components/AlertDialog.vue";
 import CheckBox from "../../components/CheckBox.vue";
+import Loader from "../../components/Loader.vue";
 
 import StateEnum from "../../store/StateEnum.js";
 
@@ -156,6 +158,7 @@ export default {
     CustomerDialog,
     AlertDialog,
     CheckBox,
+    Loader,
   },
   data() {
     return {
@@ -200,6 +203,12 @@ export default {
        * CreatedBy: dbhuan (29/04/2021)
        */
       customerGroupOptions: [],
+
+      /**
+       * Trạng thái của khách hàng dialog: LOADING, SUCCESS, ERROR.
+       * CreatedBy: dbhuan (04/05/2021)
+       */
+      stateCustomerDialog: StateEnum.LOADING,
 
       /**
        * Id nhóm khách hàng đang được chọn.
@@ -427,6 +436,7 @@ export default {
      */
     onClickBtnAddCustomer() {
       this.customerModify = null;
+      this.stateCustomerDialog = StateEnum.SUCCESS;
       this.setStateCustomerDialog(true);
     },
 
@@ -458,15 +468,21 @@ export default {
      * CreatedBy: dbhuan (29/04/2021)
      */
     onDblClickTrCustomer(customerId) {
+      this.customerModify = null;
+      this.stateCustomerDialog = StateEnum.LOADING;
+      this.setStateCustomerDialog(true);
+
       // call api lấy thông tin khách hàng.
       axios
         .get(`/api/v1/customers/${customerId}`)
         .then((res) => res.data)
         .then((data) => {
           this.customerModify = data;
-          this.setStateCustomerDialog(true);
+          this.stateCustomerDialog = StateEnum.SUCCESS;
         })
-        .catch();
+        .catch(() => {
+          this.stateCustomerDialog = StateEnum.ERROR;
+        });
     },
 
     /**
@@ -615,29 +631,5 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-/* Loader */
-.loader {
-  border: 2px solid #f3f3f3; /* Light grey */
-  border-top: 2px solid #019160; /* Blue */
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  animation: spin 2s linear infinite;
-}
-
-.error {
-  text-align: center;
-  font-size: 15px;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
 }
 </style>

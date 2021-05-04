@@ -9,8 +9,24 @@
         </div>
       </div>
       <div class="dialog-body">
-        <div class="row">
-          <div class="col-4"></div>
+        <div
+          v-if="isLoading"
+          style="
+            height: 366px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          "
+        >
+          <Loader />
+        </div>
+        <div class="row" v-if="isSuccess">
+          <div class="col-4 avatar-box">
+            <div class="avatar"></div>
+            <div style="text-align: center">
+              Vui lòng chọn ảnh có định dạng jpg, jpeg, png, gif
+            </div>
+          </div>
 
           <div class="col-8">
             <div class="row">
@@ -228,12 +244,16 @@ import Button from "../../components/Button.vue";
 import Input from "../../components/Input.vue";
 import Combobox from "../../components/Combobox.vue";
 import Radio from "../../components/Radio.vue";
+import Loader from "../../components/Loader.vue";
+
+import StateEnum from "../../store/StateEnum.js";
 export default {
   components: {
     Button,
     Input,
     Combobox,
     Radio,
+    Loader,
   },
   props: {
     /**
@@ -255,6 +275,24 @@ export default {
     customer: {
       type: Object,
       default: null,
+    },
+
+    /**
+     * Trạng thái của dilaog: LOADING, SUCCESS, ERROR.
+     * CreatedBy: dbhuan (04/05/2021)
+     */
+    state: {
+      type: Number,
+      default: StateEnum.LOADING,
+    },
+  },
+
+  computed: {
+    isLoading: function () {
+      return this.state == StateEnum.LOADING;
+    },
+    isSuccess: function () {
+      return this.state == StateEnum.SUCCESS;
     },
   },
 };
@@ -322,6 +360,24 @@ export default {
   overflow: auto;
   padding-left: 24px;
   padding-right: 24px;
+}
+
+.dialog .dialog-body .avatar-box {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.dialog .dialog-body .avatar {
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  background-image: url("../../assets/img/default-avatar.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .dialog .dialog-footer {
