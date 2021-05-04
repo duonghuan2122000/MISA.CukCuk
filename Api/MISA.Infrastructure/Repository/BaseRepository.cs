@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using MISA.Core.Interfaces.Repository;
 using MySqlConnector;
 using System;
+using System.Collections.Generic;
 using System.Data;
 
 namespace MISA.Infrastructure.Repository
@@ -104,6 +105,26 @@ namespace MISA.Infrastructure.Repository
             var proc = $"Proc_Update{_tableName}";
 
             var rowsAffect = connection.Execute(proc, t, commandType: CommandType.StoredProcedure);
+
+            return rowsAffect;
+        }
+
+        /// <summary>
+        /// Xóa nhiều thực thể T.
+        /// </summary>
+        /// <returns></returns>
+        /// CreatedBy: dbhuan (04/05/2021)
+        public int Delete(List<Guid> ids)
+        {
+            // Thiết lập kết nối db.
+            var connection = new MySqlConnection(_connectionString);
+
+            var proc = $"Proc_Delete{_tableName}s";
+
+            var p = new DynamicParameters();
+            p.Add($"{_tableName}Ids", string.Join(",", ids));
+
+            var rowsAffect = connection.Execute(proc, p, commandType: CommandType.StoredProcedure);
 
             return rowsAffect;
         }

@@ -2,7 +2,7 @@
   <div class="header">
     <div class="logo-box">
       <div class="toggle fas fa-bars" @click="$emit('toggleNavbar')"></div>
-      <div class="logo">Misa CukCuk</div>
+      <div class="logo"></div>
     </div>
 
     <div class="header-toolbar-box">
@@ -65,7 +65,12 @@ export default {
 
 .header .logo-box .logo {
   margin-left: 10px;
-  font-size: 24px;
+  background-image: url('../../assets/img/cukcuk-logo.png');
+  background-position-y: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 30px;
+  width: 200px;
 }
 
 /* Header toolbar box */

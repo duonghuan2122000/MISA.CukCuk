@@ -15,12 +15,16 @@
 
       <div class="toolbar-box" style="margin-top: 16px">
         <div class="toolbar-left">
-          <Input
-            placeholder="Nhập mã, họ tên hoặc số điện thoại khách hàng"
-            style="width: 300px"
-            v-model="customerFilter"
-            @input="onChangeInputCustomerFilter"
-          />
+          <div class="input-box">
+            <span class="fas fa-search icon-left"></span>
+            <Input
+              placeholder="Nhập mã, họ tên hoặc số điện thoại khách hàng"
+              style="width: 300px"
+              class="has-icon"
+              v-model="customerFilter"
+              @input="onChangeInputCustomerFilter"
+            />
+          </div>
           <Combobox
             style="margin-left: 8px; width: 150px"
             :options="customerGroupOptions"
@@ -30,19 +34,20 @@
         </div>
         <div class="toolbar-right">
           <Button
-            :color="null"
-            :onlyIcon="true"
-            icon="sync"
-            @click="refreshData"
-          />
-          <Button
-            style="margin-left: 8px"
+            v-if="customersDel && customersDel.length > 0"
             styleBtn="background-color: #f20"
             styleIcon="color: #fff"
             :color="null"
             :onlyIcon="true"
             icon="trash"
             @click="onClickDeleteCustomer"
+          />
+          <Button
+            style="margin-left: 8px"
+            :color="null"
+            :onlyIcon="true"
+            icon="sync"
+            @click="refreshData"
           />
         </div>
       </div>
@@ -55,6 +60,13 @@
           <Table v-if="customers.length > 0">
             <template v-slot:head>
               <tr>
+                <th>
+                  <input
+                    type="checkbox"
+                    @change="onSelectAllCustomers"
+                    :checked="isCheckedAll"
+                  />
+                </th>
                 <th>Mã khách hàng</th>
                 <th>Họ và tên</th>
                 <th>Ngày sinh</th>
@@ -68,14 +80,11 @@
               <tr
                 v-for="c in customers"
                 :key="c.customerId"
-                :class="{
-                  selected:
-                    selectedCustomerDel &&
-                    selectedCustomerDel.customerId == c.customerId,
-                }"
-                @click="onSelectCustomer(c)"
                 @dblclick="onDblClickTrCustomer(c.customerId)"
               >
+                <td>
+                  <CheckBox :value="c.customerId" v-model="customersDel" />
+                </td>
                 <td>{{ c.customerCode }}</td>
                 <td>{{ c.fullName }}</td>
                 <td>{{ c.dateOfBirth | formatDate }}</td>
@@ -129,6 +138,7 @@ import Pagination from "../../components/Pagination.vue";
 import ConfirmDialog from "../../components/ConfirmDialog.vue";
 import CustomerDialog from "./CustomerDialog.vue";
 import AlertDialog from "../../components/AlertDialog.vue";
+import CheckBox from "../../components/CheckBox.vue";
 
 import StateEnum from "../../store/StateEnum.js";
 
@@ -145,6 +155,7 @@ export default {
     ConfirmDialog,
     CustomerDialog,
     AlertDialog,
+    CheckBox,
   },
   data() {
     return {
@@ -179,6 +190,12 @@ export default {
       pageSize: 10,
 
       /**
+       * Danh sách khách hàng.
+       * CreatedBy: dbhuan (04/05/2021)
+       */
+      customers: [],
+
+      /**
        * Danh sách nhóm khách hàng.
        * CreatedBy: dbhuan (29/04/2021)
        */
@@ -197,10 +214,16 @@ export default {
       customerFilter: "",
 
       /**
-       * Khách hàng đang được chọn cần xóa.
-       * CreatedBy: dbhuan (29/04/2021)
+       * Danh sách khách hàng cần xóa.
+       * CreatedBy: dbhuan (04/05/2021)
        */
-      selectedCustomerDel: null,
+      customersDel: [],
+
+      /**
+       * Biến xác định trạng thái checkbox all.
+       * CreatedBy: dbhuan (04/05/2021)
+       */
+      isCheckedAll: false,
 
       /**
        * Khách hàng đang được thêm mới hoặc chính sửa.
@@ -301,7 +324,9 @@ export default {
      */
     refreshData() {
       this.selectedCustomerGroupId = "";
-      this.$router.push({ query: { page: 1 } });
+      this.customersDel = [];
+      this.isCheckedAll = false;
+      this.$router.push({ query: { page: 1 } }).catch(() => {});
     },
 
     /**
@@ -414,17 +439,17 @@ export default {
     },
 
     /**
-     * Hàm click chọn một khách hàng trên bảng.
-     * CreatedBy: dbhuan (29/04/2021)
+     * Hàm chọn tất cả khách hàng trên table.
+     * CreatedBy: dbhuan (04/05/2021)
      */
-    onSelectCustomer(customer) {
-      if (
-        !this.selectedCustomerDel ||
-        customer.customerId != this.selectedCustomerDel.customerId
-      ) {
-        this.selectedCustomerDel = customer;
+    onSelectAllCustomers(e) {
+      let isChecked = e.target.checked;
+      if (!isChecked) {
+        this.isCheckedAll = false;
+        this.customersDel = [];
       } else {
-        this.selectedCustomerDel = null;
+        this.isCheckedAll = true;
+        this.customersDel = this.customers.map((item) => item.customerId);
       }
     },
 
@@ -449,15 +474,8 @@ export default {
      * CreatedBy: dbhuan (29/04/2021)
      */
     onClickDeleteCustomer() {
-      if (this.selectedCustomerDel == null) {
-        // nếu khách hàng cần xóa chưa được chọn thì hiển thị dialog alert.
-        this.msgAlertDialog =
-          "Bạn phải chọn khách hàng cần xóa trước khi chọn nút xóa.";
-        this.setStateAlertDialog(true);
-        return;
-      }
       // Hiển thị dialog confirm xác nhận xóa.
-      this.msgConfirmDialog = `Bạn có chắc muốn xóa khách hàng [${this.selectedCustomerDel.customerCode}] này khỏi hệ thống không ?`;
+      this.msgConfirmDialog = `Bạn có chắc muốn xóa khách hàng đã chọn khỏi hệ thống không ?`;
       this.setStateConfirmDialog(true);
     },
 
@@ -470,9 +488,13 @@ export default {
       this.setStateConfirmDialog(false);
       this.msgConfirmDialog = "";
 
-      // call api xóa khách hàng.
-      axios
-        .delete(`/api/v1/customers/${this.selectedCustomerDel.customerId}`)
+      axios({
+        method: "DELETE",
+        url: "/api/v1/customers",
+        data: {
+          ids: this.customersDel,
+        },
+      })
         .then((res) => res.data)
         .then(() => {
           // thành công thì hiển thị thông báo thành công trên dialog alert.
@@ -496,7 +518,7 @@ export default {
     cancelDelCustomer() {
       this.setStateConfirmDialog(false);
       this.msgConfirmDialog = "";
-      this.selectedCustomerDel = null;
+      this.customersDel = [];
     },
   },
 
@@ -555,6 +577,22 @@ export default {
 .content .toolbar-left {
   display: flex;
   flex-direction: row;
+}
+
+.content .toolbar-left .input-box {
+  display: inline-block;
+  position: relative;
+}
+
+.content .toolbar-left .input-box .icon-left {
+  position: absolute;
+  left: 16px;
+  top: 13px;
+  color: #bbbbbb;
+}
+
+.content .toolbar-left .input-box .has-icon {
+  padding-left: 40px;
 }
 
 .content .scroll {

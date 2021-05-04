@@ -13,12 +13,12 @@
         </div>
         <div class="navbar-item-text">Báo cáo</div>
       </div>
-      <div class="navbar-item active">
+      <router-link class="navbar-item active" to="/customers">
         <div class="navbar-item-icon">
           <i class="fas fa-users"></i>
         </div>
         <div class="navbar-item-text">Danh sách khách hàng</div>
-      </div>
+      </router-link>
     </div>
   </div>
 </template>

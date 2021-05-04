@@ -116,14 +116,11 @@ namespace MISA.Core.Service
                         {
                             // lấy thông lỗi mặc định.
                             var msgErrorRequiredDefault = Properties.Resources.MsgErrorRequired;
-                            
-                            var sb = new StringBuilder();
 
                             // Bind tên hiển thị cho thông báo lỗi. Mặc định là tên thuộc tính của thực thể.
                             var name = (requiredProperties[0] as PropertyRequired).Name.Length > 0 ? (requiredProperties[0] as PropertyRequired).Name : property.Name;
-                            sb.AppendFormat(msgErrorRequiredDefault, name);
 
-                            msgError = sb.ToString();
+                            msgError = string.Format(msgErrorRequiredDefault, name);
                         }
                         throw new ClientException(msgError);
                     }
@@ -144,14 +141,11 @@ namespace MISA.Core.Service
                         {
                             // lấy thông lỗi mặc định.
                             var msgErrorMaxLengthDefault = Properties.Resources.MsgErrorRequired;
-                            
-                            var sb = new StringBuilder();
 
                             // Bind tên hiển thị cho thông báo lỗi. Mặc định là tên thuộc tính của thực thể.
                             var name = (maxLengthProperties[0] as PropertyRequired).Name.Length > 0 ? (maxLengthProperties[0] as PropertyRequired).Name : property.Name;
-                            sb.AppendFormat(msgErrorMaxLengthDefault, name);
 
-                            msgError = sb.ToString();
+                            msgError = string.Format(msgErrorMaxLengthDefault, name);
                         }
                         throw new ClientException(msgError);
                     }
@@ -168,6 +162,16 @@ namespace MISA.Core.Service
         protected virtual void CustomValidate(T t, bool isInsert = true)
         {
 
+        }
+
+        /// <summary>
+        /// Xóa nhiều thực thể T.
+        /// </summary>
+        /// <returns></returns>
+        /// CreatedBy: dbhuan (04/05/2021)
+        public int Delete(List<Guid> ids)
+        {
+            return _baseRepository.Delete(ids);
         }
     }
 }

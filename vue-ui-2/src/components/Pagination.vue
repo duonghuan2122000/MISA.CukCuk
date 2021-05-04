@@ -2,6 +2,11 @@
   <div v-if="totalPages > 1" class="pagination">
     <router-link
       v-if="page > 1"
+      class="pagination-item first-page"
+      to="?page=1"
+    />
+    <router-link
+      v-if="page > 1"
       class="pagination-item prev-page"
       :to="'?page=' + (page - 1)"
     >
@@ -24,6 +29,11 @@
     >
       <i class="fas fa-chevron-right"></i>
     </router-link>
+    <router-link
+      v-if="page < totalPages"
+      class="pagination-item last-page"
+      :to="'?page=' + totalPages"
+    />
   </div>
 </template>
 
@@ -86,6 +96,20 @@ export default {
   margin-right: 4px;
   cursor: pointer;
   text-decoration: none;
+}
+
+.pagination .first-page {
+  background-image: url("../assets/icon/btn-firstpage.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 20px 20px;
+}
+
+.pagination .last-page {
+  background-image: url("../assets/icon/btn-lastpage.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 20px 20px;
 }
 
 .pagination .pagination-item.active {

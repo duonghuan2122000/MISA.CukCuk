@@ -44,5 +44,12 @@ namespace MISA.Core.Interfaces.Repository
         /// <returns>Số thực thể bị xóa.</returns>
         /// CreatedBy: dbhuan (27/04/2021)
         public int Delete(Guid id);
+
+        /// <summary>
+        /// Xóa nhiều thực thể T.
+        /// </summary>
+        /// <returns></returns>
+        /// CreatedBy: dbhuan (04/05/2021)
+        public int Delete(List<Guid> ids);
     }
 }

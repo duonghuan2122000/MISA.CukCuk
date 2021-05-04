@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using MISA.Core.Entities;
 using MISA.Core.Interfaces.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MISA.CukCuk.Api.Controllers
 {
@@ -29,20 +26,12 @@ namespace MISA.CukCuk.Api.Controllers
         [HttpGet("{entityId}")]
         public virtual IActionResult Get([FromRoute] Guid entityId)
         {
-            try
+            var entity = _baseService.Get(entityId);
+            if (entity != null)
             {
-                var entity = _baseService.Get(entityId);
-                if (entity != null)
-                {
-                    return Ok(entity);
-                }
-                return NoContent();
+                return Ok(entity);
             }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            return NoContent();
         }
 
         /// <summary>
@@ -58,20 +47,12 @@ namespace MISA.CukCuk.Api.Controllers
         [HttpPost]
         public virtual IActionResult Post([FromBody] T t)
         {
-            try
+            var res = _baseService.Insert(t);
+            if (res > 0)
             {
-                var res = _baseService.Insert(t);
-                if (res > 0)
-                {
-                    return StatusCode(201, res);
-                }
-                return NoContent();
+                return StatusCode(201, res);
             }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            return NoContent();
         }
 
         /// <summary>
@@ -87,20 +68,12 @@ namespace MISA.CukCuk.Api.Controllers
         [HttpPut]
         public virtual IActionResult Put([FromBody] T t)
         {
-            try
+            var res = _baseService.Update(t);
+            if (res > 0)
             {
-                var res = _baseService.Update(t);
-                if (res > 0)
-                {
-                    return StatusCode(201, res);
-                }
-                return NoContent();
+                return StatusCode(201, res);
             }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            return NoContent();
         }
 
         /// <summary>
@@ -115,20 +88,28 @@ namespace MISA.CukCuk.Api.Controllers
         [HttpDelete("{entityId}")]
         public virtual IActionResult Delete([FromRoute] Guid entityId)
         {
-            try
+            var res = _baseService.Delete(entityId);
+            if (res > 0)
             {
-                var res = _baseService.Delete(entityId);
-                if (res > 0)
-                {
-                    return Ok(res);
-                }
-                return NoContent();
+                return Ok(res);
             }
-            catch (Exception)
-            {
+            return NoContent();
+        }
 
-                throw;
+        /// <summary>
+        /// Xóa nhiều thực thể T.
+        /// </summary>
+        /// <returns></returns>
+        /// CreatedBy: dbhuan (04/05/2021)
+        [HttpDelete]
+        public virtual IActionResult Delete([FromBody] CustomerId customerId)
+        {
+            var res = _baseService.Delete(customerId.ids);
+            if (res > 0)
+            {
+                return Ok(res);
             }
+            return NoContent();
         }
     }
 }

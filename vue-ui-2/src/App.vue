@@ -38,8 +38,8 @@ export default {
 </script>
 
 <style>
-@import url("./assets/fontawesome5/css/fontawesome.min.css");
-@import url("./assets/fontawesome5/css/solid.min.css");
+@import url("./assets/font/fontawesome-5.15.1/css/fontawesome.min.css");
+@import url("./assets/font/fontawesome-5.15.1/css/solid.min.css");
 
 * {
   box-sizing: border-box;
@@ -51,6 +51,10 @@ export default {
 body {
   margin: 0;
   padding: 0;
+}
+
+a {
+  text-decoration: none;
 }
 
 /* width */
@@ -76,6 +80,6 @@ body {
 
 @font-face {
   font-family: Google-Sans;
-  src: url("./assets/font/OpenSans-Regular.ttf");
+  src: url("./assets/font/GoogleSans-Regular.otf");
 }
 </style>

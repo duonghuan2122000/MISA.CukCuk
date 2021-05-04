@@ -29,8 +29,7 @@
   cursor: pointer;
 }
 
-.table tbody tr:hover,
-.table tbody tr.selected {
+.table tbody tr:hover {
   background-color: #e5e5e5;
 }
 
