@@ -1,14 +1,20 @@
 <template>
   <div class="dialog" :class="{ hide: !show }">
     <div class="dialog-content">
-      <div class="dialog-header">
-        <div class="dialog-header-title">THÔNG BÁO</div>
-        <div class="dialog-close-button" @click="$emit('onChange', false)">
-          <i class="fas fa-times"></i>
-        </div>
-      </div>
       <div class="dialog-body">
-        {{ message }}
+        <div class="dialog-body-title">
+          <span :style="'background-color:' + colorAlert" class="icon-alert">
+            <span class="fas fa-check" style="color: #fff"></span>
+          </span>
+          {{ message }}
+        </div>
+        <div class="dialog-close-button" @click="$emit('onChange', false)">
+          <i
+            class="fas fa-times"
+            style="font-size: 20px; line-height: 48px"
+            :style="'color:' + colorAlert"
+          ></i>
+        </div>
       </div>
     </div>
   </div>
@@ -28,6 +34,33 @@ export default {
      * CreatedBy: dbhuan (27/04/2021)
      */
     message: String,
+
+    /**
+     * Màu của dialog alert. danger, warning, success và info
+     * CreatedBy: dbhuan (05/05/2021)
+     */
+    color: {
+      type: String,
+      default: "success",
+    },
+  },
+  computed: {
+    /**
+     * Compute colorAlert.
+     * CreatedBy: dbhuan (05/05/2021)
+     */
+    colorAlert: function () {
+      switch (this.color) {
+        case "danger":
+          return "#F65454";
+        case "warning":
+          return "#FF6900";
+        case "success":
+          return "#019160";
+        default:
+          return "#0075FF";
+      }
+    },
   },
   watch: {
     show: function (newVal) {
@@ -53,30 +86,36 @@ export default {
   width: 300px;
   background-color: #fff;
   position: relative;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
   border-radius: 4px;
 }
 
-.dialog .dialog-header {
+.dialog .dialog-body {
   padding-left: 24px;
   padding-right: 24px;
-  height: 40px;
-  line-height: 40px;
+  height: 48px;
+  line-height: 48px;
 }
 
-.dialog .dialog-header-title {
+.dialog .dialog-body-title {
   font-size: 15px;
   font-weight: bold;
+}
+
+.dialog .dialog-body-title .icon-alert {
+  display: inline-block;
+  height: 24px;
+  width: 24px;
+  line-height: 24px;
+  border-radius: 50%;
+  text-align: center;
 }
 
 .dialog .dialog-close-button {
   position: absolute;
   right: 0;
   top: 0;
-  width: 40px;
+  width: 48px;
   text-align: center;
   cursor: pointer;
   border-bottom-left-radius: 4px;
@@ -84,14 +123,6 @@ export default {
 
 .dialog .dialog-close-button:hover {
   background-color: #e5e5e5;
-}
-
-.dialog .dialog-body {
-  flex: 1;
-  overflow: auto;
-  padding-left: 24px;
-  padding-right: 24px;
-  padding-bottom: 16px;
 }
 
 .dialog.hide {

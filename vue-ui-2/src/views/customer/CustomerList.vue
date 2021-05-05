@@ -124,6 +124,7 @@
     />
     <AlertDialog
       :show="isShowAlertDialog"
+      :color="colorAlert"
       :message="msgAlertDialog"
       @onChange="setStateAlertDialog"
     />
@@ -256,7 +257,7 @@ export default {
        * Biến xác định trạng thái dialog alert.
        * CreatedBy: dbhuan (29/04/2021)
        */
-      isShowAlertDialog: true,
+      isShowAlertDialog: false,
 
       /**
        * Lời nhắn cần hiển thị dialog confirm.
@@ -269,6 +270,12 @@ export default {
        * CreatedBy: dbhuan (29/04/2021)
        */
       msgAlertDialog: "",
+
+      /**
+       * Màu của dialog alert.
+       * CreatedBy: dbhuan (05/05/2021)
+       */
+      colorAlert: "",
 
       /**
        * Biến timeout.
@@ -507,19 +514,19 @@ export default {
       axios({
         method: "DELETE",
         url: "/api/v1/customers",
-        data: {
-          ids: this.customersDel,
-        },
+        data: `"${JSON.stringify(this.customersDel).replace(/"/g, '\\"')}"`,
       })
         .then((res) => res.data)
         .then(() => {
           // thành công thì hiển thị thông báo thành công trên dialog alert.
           this.fetchCustomers();
           this.msgAlertDialog = "Xóa thành công.";
+          this.colorAlert = "success";
           this.setStateAlertDialog(true);
         })
         .catch(() => {
           // thất bại thì hiển thị thông báo thất bại trên dialog alert.
+          this.colorAlert = "danger";
           this.msgAlertDialog = "Xóa thất bại.";
           this.setStateAlertDialog(true);
         })
