@@ -44,15 +44,8 @@ export default {
 <style scoped>
 .dialog {
   position: fixed;
-  bottom: 0;
-  left: 0;
-}
-.dialog .dialog-background {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  background-color: #000;
-  opacity: 0.4;
+  top: 0;
+  left: calc(50% - 150px);
 }
 
 .dialog .dialog-content {
@@ -63,9 +56,8 @@ export default {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  border: 1px solid #ccc;
-  margin-bottom: 20px;
-  margin-left: 20px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  border-radius: 4px;
 }
 
 .dialog .dialog-header {

@@ -256,7 +256,7 @@ export default {
        * Biến xác định trạng thái dialog alert.
        * CreatedBy: dbhuan (29/04/2021)
        */
-      isShowAlertDialog: false,
+      isShowAlertDialog: true,
 
       /**
        * Lời nhắn cần hiển thị dialog confirm.
